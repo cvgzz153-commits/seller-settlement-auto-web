@@ -69,16 +69,94 @@
     footer { text-align:center; color:#88919e; font-size:.77rem; margin-top:22px; line-height:1.6; }
     @media (max-width:600px) { main { width:min(100% - 24px,900px); padding-top:26px; } .upload-grid,.metrics,.beta-stats,.control-grid { grid-template-columns:1fr; } .file-box { min-height:112px; padding:18px; } }
   </style>
+  <style>
+    /* Premium financial-service UI refresh */
+    :root { --blue:#3182f6; --blue-dark:#1b64da; --blue-pale:#eff6ff; --ink:#191f28; --muted:#6b7684; --soft:#f2f4f6; --line:#e5e8eb; --white:#fff; --navy:#191f28; --violet:#4e67eb; --green:#0f9d6e; --warning:#b26a00; --danger:#e74646; }
+    html { background:#f6f8fb; }
+    body { background:radial-gradient(900px 420px at 50% -180px,#dcebff 0%,rgba(238,246,255,.8) 35%,#f6f8fb 72%); color:var(--ink); font-family:Pretendard,"Pretendard Variable","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:-.018em; }
+    main { width:min(100% - 32px,920px); padding:20px 0 76px; position:relative; }
+    .topbar { height:52px; display:flex; align-items:center; justify-content:space-between; margin-bottom:30px; }
+    .brand { display:inline-flex; gap:9px; align-items:center; color:var(--ink); text-decoration:none; font-weight:800; font-size:1rem; letter-spacing:-.04em; }
+    .brand-mark { width:28px; height:28px; display:inline-grid; place-items:center; background:linear-gradient(145deg,#3d8cff,#1763dd); border-radius:9px; color:#fff; font-size:.87rem; font-weight:900; box-shadow:0 6px 12px rgba(49,130,246,.24); }
+    .topbar-note { color:#6b7684; font-size:.82rem; font-weight:700; background:rgba(255,255,255,.72); border:1px solid rgba(229,232,235,.9); padding:7px 10px; border-radius:999px; }
+    .hero { max-width:650px; text-align:left; margin:0 auto 27px; padding:30px 12px 10px; }
+    .beta-pill { background:#eaf3ff; color:#3182f6; padding:7px 10px; font-size:.78rem; font-weight:800; border-radius:8px; margin:0 0 16px; box-shadow:none; }
+    h1 { font-size:clamp(2.05rem,5vw,3.05rem); line-height:1.22; letter-spacing:-.066em; margin:0 0 13px; font-weight:800; }
+    .hero p { color:#6b7684; font-size:clamp(1rem,2vw,1.13rem); line-height:1.65; margin:0; letter-spacing:-.03em; }
+    .feature-chips { max-width:650px; margin:0 auto 32px; padding:0 12px; display:flex; gap:8px; flex-wrap:wrap; }
+    .feature-chips span { background:#fff; border:1px solid #e8edf3; color:#4e5968; font-size:.79rem; font-weight:700; padding:8px 10px; border-radius:9px; box-shadow:0 2px 6px rgba(31,46,64,.025); }
+    .card { background:rgba(255,255,255,.96); border:1px solid rgba(229,232,235,.9); border-radius:24px; box-shadow:0 12px 28px rgba(31,42,55,.055),0 2px 4px rgba(31,42,55,.018); padding:28px; margin-top:16px; }
+    .upload-card { padding:28px; }
+    .privacy { background:#f5f9ff; border:1px solid #e3efff; color:#4e5968; padding:13px 14px; border-radius:13px; font-size:.88rem; line-height:1.6; margin:0 0 18px; }
+    .privacy strong { color:#3182f6; }
+    .beta-stats { grid-template-columns:1fr 1fr; gap:10px; margin:0 0 26px; }
+    .stat { background:#fafbfd; border:1px solid #eef1f4; border-radius:14px; padding:14px 16px; }
+    .stat span { color:#8b95a1; font-size:.78rem; font-weight:650; margin-bottom:6px; }
+    .stat strong { color:#333d4b; font-size:1rem; letter-spacing:-.035em; }
+    .upload-grid { gap:12px; }
+    .upload-grid > div { border:1px solid #edf0f3; border-radius:18px; padding:17px; background:#fff; transition:box-shadow .18s,border-color .18s,transform .18s; }
+    .upload-grid > div:hover { border-color:#b9d7ff; box-shadow:0 8px 18px rgba(49,130,246,.07); transform:translateY(-1px); }
+    h2 { font-size:.96rem; margin:0 0 12px; font-weight:800; color:#333d4b; letter-spacing:-.035em; }
+    .file-box { border:1.5px dashed #d3d9e1; background:#fafbfc; border-radius:13px; min-height:151px; padding:23px 14px 16px; color:#6b7684; font-size:.89rem; font-weight:700; }
+    .file-box:hover,.file-box:focus-within { border-color:#3182f6; background:#f6faff; color:#3182f6; box-shadow:inset 0 0 0 3px rgba(49,130,246,.04); }
+    .file-icon { width:34px; height:34px; border-radius:11px; background:#eaf3ff; color:#3182f6; display:grid; place-items:center; margin:0 auto 9px; font-size:18px; font-weight:800; }
+    .file-box small { color:#98a2ae; font-size:.73rem; font-weight:600; margin-top:6px; }
+    .file-name { color:#6b7684; font-size:.75rem; font-weight:600; margin-top:10px; min-height:16px; }
+    hr { border-top:1px solid #edf0f3; margin:24px 0; }
+    .control-grid { gap:12px; background:#fafbfc; border-radius:16px; padding:14px; align-items:center; }
+    label.field-label { color:#4e5968; font-size:.79rem; margin:0 0 7px; font-weight:800; }
+    select { appearance:none; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7684' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 13px center; background-size:16px; border:1px solid #dfe4ea; border-radius:10px; color:#333d4b; padding:11px 39px 11px 12px; font-size:.84rem; font-weight:700; box-shadow:0 1px 1px rgba(31,42,55,.02); }
+    select:focus { outline:3px solid rgba(49,130,246,.14); border-color:#83b6ff; }
+    .sample-row { min-height:auto; border:1px solid #dfe4ea; background:#fff; border-radius:10px; padding:11px 12px; color:#4e5968; font-size:.84rem; font-weight:700; }
+    .sample-row:hover { background:#f7fbff; border-color:#b9d7ff; }
+    .sample-row input { accent-color:#3182f6; }
+    .primary { min-height:54px; margin-top:18px; border-radius:14px; background:linear-gradient(135deg,#3a8cff,#2676ee); color:#fff; font-size:1rem; font-weight:800; box-shadow:0 10px 18px rgba(49,130,246,.22); }
+    .primary:hover { background:linear-gradient(135deg,#267df6,#1766dc); box-shadow:0 12px 22px rgba(49,130,246,.3); transform:translateY(-1px); }
+    .primary:active { transform:translateY(0); }
+    .message { border-radius:12px; padding:13px 14px; font-size:.87rem; font-weight:650; }
+    .message.info { background:#f1f7ff; color:#3972b7; }
+    .message.success { background:#effaf6; color:#0b8d62; }
+    .message.warning { background:#fff8e8; color:#a35f00; }
+    .message.error { background:#fff1f0; color:#d44343; }
+    .mapping { background:#f7faff; border:1px solid #e1edff; color:#567091; border-radius:12px; padding:13px 14px; font-size:.82rem; }
+    .result-card { border-color:#dfeaff; }
+    .metrics { gap:12px; margin:18px 0; }
+    .metric { border:1px solid #e9edf1; border-radius:16px; padding:18px; background:#fbfcfd; }
+    .metric span { color:#8b95a1; font-size:.8rem; font-weight:700; margin-bottom:7px; }
+    .metric strong { color:#333d4b; font-size:1.65rem; }
+    .metric.danger { background:#fffafa; border-color:#fee3e0; }
+    .metric.danger strong { color:#e74646; }
+    .table-wrap { border:1px solid #e9edf1; border-radius:13px; margin:15px 0; }
+    th { background:#f8fafc; color:#6b7684; font-size:.76rem; font-weight:800; }
+    th,td { border-bottom:1px solid #edf0f3; padding:13px 14px; }
+    td { color:#4e5968; font-size:.85rem; }
+    .download { min-height:49px; border-radius:13px; background:#f2f6fc; color:#2676ee; font-weight:800; }
+    .download:hover { background:#e5f0ff; }
+    .beta-callout { background:linear-gradient(135deg,#fbfcff 0%,#f1f6ff 100%); border-color:#dbe9ff; position:relative; overflow:hidden; }
+    .beta-callout::after { content:""; position:absolute; width:190px; height:190px; border-radius:50%; background:rgba(49,130,246,.07); right:-78px; top:-90px; pointer-events:none; }
+    .beta-callout h2 { font-size:1.08rem; position:relative; z-index:1; }
+    .beta-callout p { color:#6b7684; font-size:.9rem; max-width:650px; position:relative; z-index:1; }
+    .feedback-button { min-height:48px; border-radius:13px; background:#fff; border:1px solid #b9d7ff; color:#2676ee; font-size:.92rem; position:relative; z-index:1; }
+    .feedback-button:hover { background:#eaf3ff; color:#1766dc; }
+    .guide { background:#f9fafb; border-radius:14px; padding:14px 16px; color:#6b7684; font-size:.8rem; margin:16px 0 0; }
+    footer { color:#98a2ae; font-size:.76rem; margin-top:24px; }
+    @media (max-width:640px) { main { width:min(100% - 22px,920px); padding-top:12px; } .topbar { margin-bottom:12px; } .topbar-note { font-size:.72rem; } .hero { padding:22px 4px 8px; margin-bottom:20px; } h1 { font-size:2rem; } .feature-chips { padding:0 4px; margin-bottom:22px; } .card,.upload-card { border-radius:20px; padding:18px; } .upload-grid,.beta-stats,.control-grid,.metrics { grid-template-columns:1fr; } .upload-grid > div { padding:14px; } .file-box { min-height:116px; padding:16px; } .control-grid { align-items:stretch; } .sample-row { min-height:44px; } .primary { min-height:52px; } }
+  </style>
 </head>
 <body>
   <main>
-    <header class="hero">
+    <div class="topbar" aria-label="서비스 정보">
+      <a class="brand" href="#top" aria-label="정산메이트 홈"><span class="brand-mark" aria-hidden="true">S</span><span>정산메이트</span></a>
+      <span class="topbar-note">Free Beta</span>
+    </div>
+    <header class="hero" id="top">
       <div class="beta-pill">무료 베타 · 셀러 피드백 반영 중</div>
       <h1>인스타 공구·마켓 정산 자동화</h1>
       <p>서식이 달라도 주요 열을 찾아, 주문번호·연락처·이름 순으로 입금 내역을 대조합니다.</p>
     </header>
+    <div class="feature-chips" aria-label="서비스 핵심 가치"><span>서버 전송 없이 안전하게</span><span>3단계 스마트 매칭</span><span>엑셀 결과 즉시 다운로드</span></div>
 
-    <section class="card" aria-labelledby="uploadTitle">
+    <section class="card upload-card" aria-labelledby="uploadTitle">
       <div class="privacy" role="status"><span aria-hidden="true">🔒</span><span>파일은 서버로 전송하지 않습니다. 이 페이지가 열린 <strong>사용자 브라우저 안에서만</strong> 분석되며, 다른 사람의 데이터를 저장하거나 수집하지 않습니다.</span></div>
       <div class="beta-stats" aria-label="베타 사용 상태">
         <div class="stat"><span>이 브라우저의 베타 테스트</span><strong id="betaRuns">0회 실행</strong></div>
@@ -121,7 +199,7 @@
       <div id="mapping" class="mapping" aria-live="polite"></div>
     </section>
 
-    <section class="card results" id="results" aria-live="polite" aria-labelledby="reportTitle">
+    <section class="card results result-card" id="results" aria-live="polite" aria-labelledby="reportTitle">
       <h2 id="reportTitle">정산 결과 리포트</h2>
       <div class="metrics">
         <div class="metric"><span>정상 매칭</span><strong id="matchedCount">0명</strong></div>
