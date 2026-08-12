@@ -216,7 +216,12 @@
     .install-button.show { display:inline-flex; align-items:center; }
     .help-fab { position:fixed; right:24px; bottom:24px; z-index:30; min-height:48px; padding:0 16px; display:inline-flex; align-items:center; gap:8px; border-radius:999px; background:#191f28; color:#fff; text-decoration:none; font-size:.86rem; font-weight:800; box-shadow:0 10px 22px rgba(25,31,40,.24); transition:transform .18s,box-shadow .18s; }
     .help-fab:hover { transform:translateY(-2px); box-shadow:0 14px 28px rgba(25,31,40,.28); }
-    @media (max-width:640px) { .app-tabs { margin:0 0 17px; border-radius:13px; } .app-tab { padding:0 6px; min-height:42px; font-size:.75rem; } .panel-intro { padding:0 4px; } .template-grid,.template-form,.report-kpis,.automation-grid,.advanced-kpis { grid-template-columns:1fr; } .phase-badge { margin-left:0; } .service-card-title { flex-wrap:wrap; } .help-fab { right:14px; bottom:14px; min-height:45px; padding:0 14px; } }
+    .exception-workspace { margin-top:18px; padding:18px; border:1px solid #f0dcc0; border-radius:18px; background:linear-gradient(135deg,#fffdf9,#fff8ed); }
+    .exception-header { display:flex; align-items:flex-start; gap:11px; margin-bottom:14px; }.exception-header .service-icon { background:#fff0cf; color:#b06a00; }.exception-header h3 { margin:1px 0 4px; color:#333d4b; font-size:1rem; }.exception-header p { margin:0; color:#7b6a52; font-size:.81rem; line-height:1.55; }
+    .exception-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }.exception-stat { padding:12px; border:1px solid #f0e3d0; border-radius:13px; background:#fff; }.exception-stat span { display:block; color:#8b795f; font-size:.72rem; font-weight:800; margin-bottom:5px; }.exception-stat strong { color:#5b3c16; font-size:1.08rem; letter-spacing:-.04em; }.exception-stat.resolved strong { color:#1672eb; }
+    .exception-review-list { display:grid; gap:11px; }.exception-card { padding:15px; border:1px solid #f0e3d0; border-radius:15px; background:#fff; }.exception-card.is-resolved { border-color:#cfe7dc; background:#fbfffc; }.exception-card-top { display:flex; gap:10px; align-items:flex-start; justify-content:space-between; }.exception-card h4 { margin:0 0 4px; color:#333d4b; font-size:.91rem; }.exception-card p { margin:0; color:#7b8795; font-size:.78rem; line-height:1.5; }.exception-amount { color:#191f28; font-size:.95rem; font-weight:850; white-space:nowrap; }.exception-chip { display:inline-flex; align-items:center; min-height:23px; margin-top:8px; padding:0 8px; border-radius:999px; background:#fff3db; color:#a86400; font-size:.7rem; font-weight:850; }.exception-chip.resolved { background:#e8f8f1; color:#11845d; }
+    .exception-action-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:13px; }.exception-action-grid label { display:flex; flex-direction:column; gap:6px; color:#6b7684; font-size:.73rem; font-weight:800; }.exception-action-grid select,.exception-action-grid input { min-height:39px; width:100%; padding:8px 10px; border:1px solid #dfe4ea; border-radius:9px; background:#fff; color:#333d4b; font:inherit; font-size:.78rem; }.exception-action-grid input:focus,.exception-action-grid select:focus { outline:3px solid rgba(49,130,246,.12); border-color:#83b6ff; }.exception-save { width:100%; min-height:41px; margin-top:11px; border-radius:10px; background:#f1f7ff; color:#1f6fe5; font-size:.8rem; font-weight:850; }.exception-save:hover { background:#e1efff; }.exception-hint { margin:10px 0 0; color:#8b795f; font-size:.74rem; line-height:1.5; }.result-metrics { grid-template-columns:repeat(3,1fr); }.metric.review strong { color:#1672eb; }
+    @media (max-width:640px) { .app-tabs { margin:0 0 17px; border-radius:13px; } .app-tab { padding:0 6px; min-height:42px; font-size:.75rem; } .panel-intro { padding:0 4px; } .template-grid,.template-form,.report-kpis,.automation-grid,.advanced-kpis,.exception-summary,.exception-action-grid,.result-metrics { grid-template-columns:1fr; } .phase-badge { margin-left:0; } .service-card-title { flex-wrap:wrap; } .help-fab { right:14px; bottom:14px; min-height:45px; padding:0 14px; } }
   </style>
   <style>
     .plan-trigger { min-height:34px; padding:0 11px; border-radius:999px; background:#182c4f; color:#fff; font-size:.75rem; font-weight:850; box-shadow:0 5px 12px rgba(24,44,79,.16); }
@@ -227,6 +232,18 @@
     .pricing-modal[hidden] { display:none; }.pricing-modal { position:fixed; inset:0; z-index:61; display:grid; place-items:center; padding:20px; background:rgba(25,31,40,.5); backdrop-filter:blur(5px); }.pricing-card { width:min(100%,760px); max-height:min(760px,calc(100vh - 40px)); overflow:auto; padding:26px; border-radius:24px; background:#fff; box-shadow:0 24px 64px rgba(15,23,42,.28); position:relative; }.pricing-close { position:absolute; right:14px; top:14px; width:34px; height:34px; border:0; border-radius:50%; background:#f2f4f6; color:#6b7684; font-size:1.15rem; }.pricing-intro { max-width:500px; margin:0 auto 20px; text-align:center; }.pricing-intro .paywall-kicker { margin-bottom:10px; }.pricing-intro h2 { margin:0 0 7px; color:#191f28; font-size:1.55rem; letter-spacing:-.05em; }.pricing-intro p { margin:0; color:#6b7684; font-size:.88rem; line-height:1.6; }.pricing-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }.pricing-tier { padding:19px; border:1px solid #e5e9ef; border-radius:18px; background:#fbfcfd; }.pricing-tier.pro { border:2px solid #3182f6; background:linear-gradient(145deg,#f7fbff,#edf5ff); box-shadow:0 10px 24px rgba(49,130,246,.11); }.pricing-tier h3 { margin:0 0 6px; color:#333d4b; font-size:1rem; }.pricing-tier > p { min-height:39px; margin:0; color:#6b7684; font-size:.8rem; line-height:1.55; }.pricing-price { display:flex; align-items:baseline; gap:5px; margin:16px 0; }.pricing-price strong { color:#191f28; font-size:1.65rem; letter-spacing:-.05em; }.pricing-price span { color:#8b95a1; font-size:.76rem; }.pricing-tier ul { display:grid; gap:8px; margin:0; padding:0; list-style:none; }.pricing-tier li { color:#4e5968; font-size:.8rem; line-height:1.45; }.pricing-tier li::before { content:"✓"; display:inline-block; width:17px; color:#1672eb; font-weight:900; }.pricing-tier .secondary-button,.pricing-tier .pro-action { margin-top:18px; }.pricing-note { margin:16px 0 0; padding:12px; border-radius:11px; background:#f8fafc; color:#7b8795; font-size:.76rem; line-height:1.55; text-align:center; }
     @media (max-width:640px) { .plan-trigger { padding:0 9px; font-size:.7rem; }.pricing-card { padding:22px 16px; }.pricing-grid { grid-template-columns:1fr; }.pricing-tier > p { min-height:0; } }
   </style>
+  <style>
+    .upload-grid[hidden],.paste-input-mode[hidden] { display:none !important; }
+    .input-mode-switch { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:5px; border:1px solid #e6ebf1; border-radius:13px; background:#f7f9fb; }
+    .input-mode { min-height:42px; border-radius:9px; background:transparent; color:#7b8795; font-size:.84rem; font-weight:850; }
+    .input-mode.active { background:#fff; color:#2676ee; box-shadow:0 2px 7px rgba(31,42,55,.10); }
+    .input-mode-hint { margin:10px 2px 16px; color:#7b8795; font-size:.78rem; line-height:1.55; }
+    .paste-input-mode { padding:18px; border:1px solid #dbe9ff; border-radius:18px; background:linear-gradient(135deg,#fbfdff 0%,#f3f8ff 100%); }
+    .paste-heading { display:flex; gap:11px; align-items:flex-start; margin-bottom:14px; }.paste-heading h2 { margin:1px 0 4px; color:#333d4b; font-size:1rem; }.paste-heading p { margin:0; color:#6b7684; font-size:.81rem; line-height:1.55; }
+    .paste-guide { margin:0 0 14px; padding:12px; border-radius:12px; background:#fff; border:1px solid #e3edf9; color:#5f728b; font-size:.78rem; line-height:1.55; }.paste-guide b { color:#2676ee; }
+    .paste-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }.paste-field { display:flex; flex-direction:column; gap:7px; color:#4e5968; font-size:.82rem; font-weight:850; }.paste-field textarea { width:100%; min-height:176px; resize:vertical; padding:12px; border:1px solid #cfd9e5; border-radius:12px; background:#fff; color:#333d4b; font:500 .78rem/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }.paste-field textarea:focus { outline:3px solid rgba(49,130,246,.14); border-color:#83b6ff; }.paste-field small { min-height:17px; color:#8b95a1; font-size:.73rem; font-weight:650; }.paste-field small.ready { color:#1672eb; }.paste-field small.error { color:#d44343; }.paste-privacy { margin:14px 0 0; color:#6b7684; font-size:.76rem; line-height:1.55; }
+    @media (max-width:640px) { .input-mode-switch { gap:6px; }.input-mode { min-height:44px; font-size:.78rem; }.input-mode-hint { margin:9px 2px 14px; }.paste-input-mode { padding:14px; border-radius:15px; }.paste-grid { grid-template-columns:1fr; }.paste-field textarea { min-height:145px; font-size:.76rem; }.paste-heading .service-icon { width:38px; height:38px; border-radius:12px; } }
+  </style>
 </head>
 <body>
   <main>
@@ -236,8 +253,8 @@
     </div>
     <header class="hero" id="top">
       <div class="beta-pill">무료 베타 · 셀러 피드백 반영 중</div>
-      <h1>인스타 공구·마켓 정산 자동화</h1>
-      <p>서식이 달라도 주요 열을 찾아, 주문번호·연락처·이름 순으로 입금 내역을 대조합니다.</p>
+      <h1>계좌이체 주문 정산, 5분 안에 정리하세요</h1>
+      <p>엑셀 파일 업로드 또는 표 복사·붙여넣기로 주문과 입금 내역을 대조합니다.</p>
     </header>
     <div class="feature-chips" aria-label="서비스 핵심 가치"><span>서버 전송 없이 안전하게</span><span>3단계 스마트 매칭</span><span>엑셀 결과 즉시 다운로드</span></div>
 
@@ -257,7 +274,13 @@
       </div>
       <div class="usage-card" aria-label="무료 정산 사용량"><div class="usage-row"><span>이번 브라우저의 무료 정산</span><strong id="usageLabel">0 / 3회</strong></div><div class="usage-meter" aria-hidden="true"><i id="usageBar"></i></div><p class="usage-caption">Pro에서는 정산 횟수 제한 없이 고급 수익 리포트와 자동 알림 준비 기능을 이용할 수 있습니다. <button id="viewPlansButton" type="button">요금제 비교</button></p></div>
 
-      <div class="upload-grid">
+      <div class="input-mode-switch" role="group" aria-label="데이터 입력 방식">
+        <button id="inputModeUpload" class="input-mode active" type="button" aria-pressed="true">파일 업로드</button>
+        <button id="inputModePaste" class="input-mode" type="button" aria-pressed="false">표 복사·붙여넣기</button>
+      </div>
+      <p class="input-mode-hint">PC에서는 엑셀 파일을 올리고, 모바일이나 스프레드시트에서는 표 전체를 복사해 바로 붙여넣을 수 있습니다.</p>
+
+      <div id="uploadInputMode" class="upload-grid">
         <div>
           <h2 id="uploadTitle">📦 주문서 엑셀</h2>
           <label class="file-box" for="orderFile">
@@ -275,6 +298,16 @@
           </label>
         </div>
       </div>
+
+      <section id="pasteInputMode" class="paste-input-mode" hidden aria-labelledby="pasteInputTitle">
+        <div class="paste-heading"><span class="service-icon" aria-hidden="true">⌘</span><div><h2 id="pasteInputTitle">표를 그대로 붙여넣으세요</h2><p>엑셀·구글 스프레드시트에서 제목 행을 포함해 표 전체를 복사한 뒤, 아래 칸에 붙여넣으면 됩니다.</p></div></div>
+        <div class="paste-guide"><b>모바일 팁</b> 은행이나 주문 앱에서 내용을 복사한 후 길게 눌러 붙여넣어 주세요. 열은 탭으로 구분된 표를 가장 잘 인식합니다.</div>
+        <div class="paste-grid">
+          <label class="paste-field" for="orderPaste"><span>📦 주문서 표</span><textarea id="orderPaste" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="구매자	주문금액	연락처	주문번호&#10;김하늘	35000	010-1234-5678	ORDER-101"></textarea><small id="orderPasteStatus">제목 행 + 주문 행을 붙여넣어 주세요.</small></label>
+          <label class="paste-field" for="depositPaste"><span>💰 입금 내역 표</span><textarea id="depositPaste" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="입금자명	입금금액	입금메모&#10;김하늘	35000	ORDER-101"></textarea><small id="depositPasteStatus">제목 행 + 입금 행을 붙여넣어 주세요.</small></label>
+        </div>
+        <p class="paste-privacy">붙여넣은 내용도 이 브라우저 안에서만 분석됩니다. 서버로 전송하거나 저장하지 않습니다.</p>
+      </section>
 
       <hr />
       <div class="control-grid">
@@ -296,12 +329,18 @@
 
     <section class="card results result-card" id="results" aria-live="polite" aria-labelledby="reportTitle">
       <h2 id="reportTitle">정산 결과 리포트</h2>
-      <div class="metrics">
-        <div class="metric"><span>정상 매칭</span><strong id="matchedCount">0명</strong></div>
+      <div class="metrics result-metrics">
+        <div class="metric"><span>자동 매칭</span><strong id="matchedCount">0명</strong></div>
+        <div class="metric review"><span>검토 완료</span><strong id="reviewedCount">0명</strong></div>
         <div class="metric danger"><span>확인 필요</span><strong id="missingCount">0명</strong></div>
       </div>
       <div id="resultText"></div><div id="tableContainer"></div>
-      <button id="downloadButton" class="download" type="button">확인 필요 명단 엑셀 다운로드</button>
+      <section id="exceptionWorkspace" class="exception-workspace" aria-labelledby="exceptionTitle" hidden>
+        <div class="exception-header"><span class="service-icon" aria-hidden="true">!</span><div><h3 id="exceptionTitle">예외 거래 검토</h3><p>부분입금·합산입금·환불·미입금처럼 자동 대조가 어려운 건만 검토하세요. 모든 검토 정보는 현재 브라우저 안에서만 유지됩니다.</p></div></div>
+        <div class="exception-summary"><div class="exception-stat"><span>검토 대기</span><strong id="exceptionPendingCount">0건</strong></div><div class="exception-stat resolved"><span>검토 완료</span><strong id="exceptionResolvedCount">0건</strong></div><div class="exception-stat"><span>남은 차액</span><strong id="exceptionOutstandingAmount">0원</strong></div></div>
+        <div id="exceptionReviewList" class="exception-review-list"></div>
+      </section>
+      <button id="downloadButton" class="download" type="button">검토 결과 엑셀 다운로드</button>
     </section>
 
     <section class="card beta-callout" aria-labelledby="feedbackTitle">
@@ -391,14 +430,54 @@
       deposit: [
         { "입금자명": "김철수", "입금금액": 35000, "입금자 연락처": "", "입금메모": "ORDER-101" },
         { "입금자명": "이름다름", "입금금액": 52000, "입금자 연락처": "010-1111-4321", "입금메모": "" },
+        { "입금자명": "박민수", "입금금액": 10000, "입금자 연락처": "010-0000-7777", "입금메모": "" },
+        { "입금자명": "박민수", "입금금액": 5000, "입금자 연락처": "010-0000-7777", "입금메모": "" },
         { "입금자명": "정지은", "입금금액": 48000, "입금자 연락처": "", "입금메모": "" },
         { "입금자명": "홍길동", "입금금액": 20000, "입금자 연락처": "", "입금메모": "" }
       ]
     };
     const el = (id) => document.getElementById(id);
     let latestMissing = [];
+    let latestExceptions = [];
+    let latestDeposits = [];
+    let latestAutoMatched = 0;
+    let latestOrders = [];
     let betaRuns = Number(localStorage.getItem("sellerSettlementBetaRuns") || "0");
     const FREE_RECONCILIATION_LIMIT = 3;
+    let inputMode = "upload";
+
+    function parsePastedTable(text, sourceLabel) {
+      const normalized = String(text || "").replace(/\r/g, "").trim();
+      if (!normalized) throw new Error(`${sourceLabel} 표를 붙여넣어 주세요.`);
+      const lines = normalized.split("\n").filter((line) => line.trim().length);
+      if (lines.length < 2) throw new Error(`${sourceLabel}에는 제목 행과 최소 1개의 데이터 행이 필요합니다.`);
+      const delimiter = lines[0].includes("\t") ? "\t" : ",";
+      const split = (line) => line.split(delimiter).map((value) => value.trim());
+      const headers = split(lines[0]);
+      if (headers.length < 2 || headers.some((header) => !header)) throw new Error(`${sourceLabel}의 첫 줄에 열 제목을 포함해 주세요.`);
+      const rows = lines.slice(1).map((line) => {
+        const values = split(line); const row = {};
+        headers.forEach((header, index) => { row[header] = values[index] ?? ""; });
+        return row;
+      }).filter((row) => Object.values(row).some((value) => String(value).trim()));
+      if (!rows.length) throw new Error(`${sourceLabel}에서 읽을 수 있는 데이터 행이 없습니다.`);
+      return rows;
+    }
+    function updatePasteStatus(textareaId, statusId, sourceLabel) {
+      const status = el(statusId); const value = el(textareaId).value;
+      if (!value.trim()) { status.textContent = "제목 행 + 데이터 행을 붙여넣어 주세요."; status.className = ""; return; }
+      try { const rows = parsePastedTable(value, sourceLabel); status.textContent = `${rows.length}개 행을 읽었습니다. 정산 버튼을 눌러 열 인식을 확인하세요.`; status.className = "ready"; }
+      catch (error) { status.textContent = error.message; status.className = "error"; }
+    }
+    function setInputMode(mode) {
+      inputMode = mode;
+      const isPaste = mode === "paste";
+      el("uploadInputMode").hidden = isPaste; el("pasteInputMode").hidden = !isPaste;
+      el("inputModeUpload").classList.toggle("active", !isPaste); el("inputModePaste").classList.toggle("active", isPaste);
+      el("inputModeUpload").setAttribute("aria-pressed", String(!isPaste)); el("inputModePaste").setAttribute("aria-pressed", String(isPaste));
+      if (isPaste) { el("useSample").checked = false; showMessage("주문서와 입금 내역 표를 각각 붙여넣은 뒤 정산을 시작하세요.", "info"); }
+      else hideMessage();
+    }
 
     function normalizeHeader(value) { return String(value || "").trim().toLowerCase().replace(/[\s_\-()[\]{}]/g, ""); }
     function normalizeName(value) { return String(value || "").trim().replace(/\s+/g, " "); }
@@ -461,56 +540,122 @@
       return rows.map((row, index) => ({ index, raw:row, name:normalizeName(sourceValue(row,mapping,"name")), amount:normalizeAmount(sourceValue(row,mapping,"amount")), phoneLast4:normalizePhoneLast4(sourceValue(row,mapping,"phone")), orderNo:normalizeOrderNo(sourceValue(row,mapping,"orderNo")), type }));
     }
     function eligibleByAmount(order, deposit) { return Number.isFinite(order.amount) && Number.isFinite(deposit.amount) && order.amount === deposit.amount; }
+    function matchingLabel(priority) { return priority === "orderNo" ? "주문번호" : priority === "phone" ? "연락처 뒷자리" : "이름"; }
+    function sameIdentifier(order, deposit, priority) { const value = priority === "phone" ? order.phoneLast4 : order[priority]; if (!value) return false; return priority === "phone" ? deposit.phoneLast4 === value : deposit[priority] === value; }
+    function candidateDeposits(order, deposits, used, priorities) {
+      return deposits.map((deposit, index) => ({ deposit, index, matchedBy:priorities.find((priority) => !used.has(index) && sameIdentifier(order,deposit,priority)) || "" })).filter((item) => item.matchedBy);
+    }
     function matchDeposits(orders, deposits, mode) {
       const used = new Set(); const missing = []; let matched = 0;
       const priorities = mode === "name_only" ? ["name"] : mode === "phone_name" ? ["phone","name"] : ["orderNo","phone","name"];
       for (const order of orders) {
-        if (!Number.isFinite(order.amount)) { missing.push({order,reason:"주문 금액 형식을 확인해 주세요.",attempt:"금액 오류"}); continue; }
-        let foundIndex = -1; let method = "";
+        if (!Number.isFinite(order.amount)) { missing.push({ order, reason:"주문 금액 형식을 확인해 주세요.", attempt:"금액 오류", candidates:[] }); continue; }
+        let foundIndex = -1;
         for (const priority of priorities) {
-          const value = priority === "phone" ? order.phoneLast4 : order[priority];
-          if (!value) continue;
-          foundIndex = deposits.findIndex((deposit, index) => !used.has(index) && eligibleByAmount(order,deposit) && (priority === "phone" ? deposit.phoneLast4 === value : deposit[priority] === value));
-          if (foundIndex >= 0) { method = priority === "orderNo" ? "주문번호+금액" : priority === "phone" ? "연락처 뒷자리+금액" : "이름+금액"; break; }
+          foundIndex = deposits.findIndex((deposit, index) => !used.has(index) && eligibleByAmount(order,deposit) && sameIdentifier(order,deposit,priority));
+          if (foundIndex >= 0) break;
         }
-        if (foundIndex >= 0) { used.add(foundIndex); matched += 1; }
-        else {
-          const tried = priorities.map((priority) => priority === "orderNo" && order.orderNo ? "주문번호" : priority === "phone" && order.phoneLast4 ? "연락처 뒷자리" : priority === "name" && order.name ? "이름" : "").filter(Boolean);
-          missing.push({order,reason:tried.length ? "일치하는 입금 기록이 없습니다." : "매칭에 사용할 식별값이 부족합니다.",attempt:tried.length ? `${tried.join(" → ")} + 금액` : "식별값 없음"});
-        }
+        if (foundIndex >= 0) { used.add(foundIndex); matched += 1; continue; }
+        const tried = priorities.filter((priority) => priority === "phone" ? Boolean(order.phoneLast4) : Boolean(order[priority])).map(matchingLabel);
+        const candidates = candidateDeposits(order,deposits,used,priorities);
+        const candidateTotal = candidates.reduce((sum, item) => sum + (Number.isFinite(item.deposit.amount) ? item.deposit.amount : 0), 0);
+        let detectedStatus = "unpaid"; let reason = tried.length ? "일치하는 입금 기록이 없습니다." : "매칭에 사용할 식별값이 부족합니다.";
+        if (candidateTotal > 0 && candidateTotal < order.amount) { detectedStatus = "partial"; reason = `동일 식별값 입금 ${candidates.length}건 합계가 주문금액보다 ${formatWon(order.amount - candidateTotal)} 부족합니다.`; }
+        if (candidates.length >= 2 && candidateTotal === order.amount) { detectedStatus = "combined_pending"; reason = `동일 식별값 입금 ${candidates.length}건의 합계가 주문금액과 일치합니다. 합산입금인지 확인해 주세요.`; }
+        if (candidates.length >= 2 && candidateTotal > order.amount) { detectedStatus = "combined_pending"; reason = `동일 식별값 입금 ${candidates.length}건의 합계가 주문금액보다 ${formatWon(candidateTotal - order.amount)} 많습니다. 합산입금인지 확인해 주세요.`; }
+        missing.push({ order, reason, attempt:tried.length ? `${tried.join(" → ")} + 금액` : "식별값 없음", candidates, candidateTotal, detectedStatus });
       }
-      return { matched, missing };
+      return { matched, missing, usedDepositIndexes:[...used] };
     }
     function maskIdentifier(order) { if (order.phoneLast4) return `연락처 ****${order.phoneLast4}`; if (order.orderNo) return `주문번호 ${order.orderNo.slice(0,3)}***`; return "-"; }
-    function renderResult(result) {
-      latestMissing = result.missing.map(({order,reason,attempt}) => ({ "주문자명":order.name || "(이름 열 없음)", "결제금액":Number.isFinite(order.amount) ? order.amount : "", "식별정보":maskIdentifier(order), "매칭 시도":attempt, "사유":reason }));
-      el("matchedCount").textContent = `${result.matched}명`; el("missingCount").textContent = `${latestMissing.length}명`;
-      const text = el("resultText"); const table = el("tableContainer");
-      if (latestMissing.length) {
-        text.innerHTML = "<div class='message show warning'>아래 주문은 일치하는 입금 기록을 찾지 못했습니다. 열 이름·금액·식별정보를 확인해 보세요.</div>";
-        table.innerHTML = `<div class="table-wrap"><table><thead><tr><th>주문자명</th><th>결제금액</th><th>식별정보</th><th>매칭 시도</th><th>사유</th></tr></thead><tbody>${latestMissing.map((row) => `<tr><td>${escapeHTML(row["주문자명"])}</td><td>${escapeHTML(formatWon(row["결제금액"]))}</td><td>${escapeHTML(row["식별정보"])}</td><td>${escapeHTML(row["매칭 시도"])}</td><td>${escapeHTML(row["사유"])}</td></tr>`).join("")}</tbody></table></div>`;
-      } else { text.innerHTML = "<div class='message show success'>모든 주문이 입금 내역과 일치합니다.</div>"; table.innerHTML = ""; }
+    function statusLabel(status) { return ({ unpaid:"미입금", partial:"부분입금", combined_pending:"합산입금 후보", combined:"합산입금 확인", refund:"환불 예정", manual_matched:"수동 매칭 완료" })[status] || "미입금"; }
+    function isResolved(status) { return ["combined","refund","manual_matched"].includes(status); }
+    function appliedAmount(item) {
+      if (item.status === "manual_matched" || item.status === "combined" || item.status === "refund") return item.order.amount;
+      if (item.status === "partial") {
+        const selected = Number.isInteger(item.selectedDepositIndex) ? latestDeposits[item.selectedDepositIndex] : null;
+        return selected && Number.isFinite(selected.amount) ? Math.min(selected.amount,item.order.amount) : Math.min(item.candidateTotal || 0,item.order.amount);
+      }
+      return 0;
+    }
+    function exceptionDownloadRows() {
+      return latestExceptions.map((item) => ({ "주문자명":item.order.name || "(이름 열 없음)", "주문금액":Number.isFinite(item.order.amount) ? item.order.amount : "", "식별정보":maskIdentifier(item.order), "매칭 시도":item.attempt, "처리상태":statusLabel(item.status), "처리금액":appliedAmount(item), "남은 차액":Math.max(0,(item.order.amount || 0) - appliedAmount(item)), "자동 분석":item.reason, "검토 메모":item.note || "" }));
+    }
+    function updateExceptionSummary() {
+      const resolved = latestExceptions.filter((item) => isResolved(item.status));
+      const pending = latestExceptions.filter((item) => !isResolved(item.status));
+      const outstanding = pending.reduce((sum,item) => sum + Math.max(0,(item.order.amount || 0) - appliedAmount(item)),0);
+      latestMissing = exceptionDownloadRows();
+      el("matchedCount").textContent = `${latestAutoMatched}명`;
+      el("reviewedCount").textContent = `${resolved.length}명`;
+      el("missingCount").textContent = `${pending.length}명`;
+      el("exceptionPendingCount").textContent = `${pending.length}건`;
+      el("exceptionResolvedCount").textContent = `${resolved.length}건`;
+      el("exceptionOutstandingAmount").textContent = formatWon(outstanding);
+      el("reportMissing").textContent = `${pending.length}건`;
+      el("reportStatus").textContent = pending.length ? `이번 정산에서 ${pending.length}건의 확인 필요 항목을 찾았습니다.` : "이번 정산의 예외 거래 검토가 완료되었습니다.";
+      return { resolved, pending, outstanding };
+    }
+    function isDepositTakenByOther(exceptionId, depositIndex) { return latestExceptions.some((item) => item.id !== exceptionId && item.selectedDepositIndex === depositIndex && ["manual_matched","partial"].includes(item.status)); }
+    function depositOptionLabel(deposit,index) { return `#${index + 1} · ${deposit.name || "이름 없음"} · ${formatWon(deposit.amount)}${deposit.phoneLast4 ? ` · ****${deposit.phoneLast4}` : ""}`; }
+    function renderExceptionWorkspace() {
+      const workspace = el("exceptionWorkspace"); const list = el("exceptionReviewList");
+      if (!latestExceptions.length) { workspace.hidden = true; return; }
+      workspace.hidden = false;
+      const summary = updateExceptionSummary();
+      list.innerHTML = latestExceptions.map((item) => {
+        const resolved = isResolved(item.status); const selected = Number.isInteger(item.selectedDepositIndex) ? String(item.selectedDepositIndex) : "";
+        const suggestedIndexes = new Set(item.candidates.map((candidate) => candidate.index));
+        const options = latestDeposits.map((deposit,index) => {
+          if (isDepositTakenByOther(item.id,index) && index !== item.selectedDepositIndex) return "";
+          const suggested = suggestedIndexes.has(index) ? " · 자동 후보" : "";
+          return `<option value="${index}" ${selected === String(index) ? "selected" : ""}>${escapeHTML(depositOptionLabel(deposit,index) + suggested)}</option>`;
+        }).join("");
+        const candidateText = item.candidates.length ? `자동 후보 ${item.candidates.length}건 · 합계 ${formatWon(item.candidateTotal)}` : "자동 후보 없음 · 필요하면 다른 입금 건을 직접 선택하세요.";
+        return `<article class="exception-card ${resolved ? "is-resolved" : ""}" data-exception-id="${item.id}"><div class="exception-card-top"><div><h4>${escapeHTML(item.order.name || "이름 없는 주문")} · ${escapeHTML(maskIdentifier(item.order))}</h4><p>${escapeHTML(item.reason)}<br>${escapeHTML(candidateText)}</p><span class="exception-chip ${resolved ? "resolved" : ""}">${escapeHTML(statusLabel(item.status))}</span></div><strong class="exception-amount">${escapeHTML(formatWon(item.order.amount))}</strong></div><div class="exception-action-grid"><label>처리 상태<select data-role="status"><option value="unpaid" ${item.status === "unpaid" ? "selected" : ""}>미입금</option><option value="partial" ${item.status === "partial" ? "selected" : ""}>부분입금</option><option value="combined_pending" ${item.status === "combined_pending" ? "selected" : ""}>합산입금 후보</option><option value="combined" ${item.status === "combined" ? "selected" : ""}>합산입금 확인</option><option value="refund" ${item.status === "refund" ? "selected" : ""}>환불 예정</option><option value="manual_matched" ${item.status === "manual_matched" ? "selected" : ""}>수동 매칭 완료</option></select></label><label>연결할 입금 건<select data-role="deposit"><option value="">선택 안 함</option>${options}</select></label><label style="grid-column:1/-1">검토 사유·메모<input data-role="note" maxlength="120" value="${escapeHTML(item.note || "")}" placeholder="예: 고객이 1만원 먼저 입금, 잔액 입금 예정" /></label></div><button class="exception-save" type="button" data-save-exception="${item.id}">검토 결과 저장</button><p class="exception-hint">상태와 메모는 현재 브라우저에서 이번 정산 결과를 확인하는 동안만 유지됩니다.</p></article>`;
+      }).join("");
+      list.querySelectorAll("[data-save-exception]").forEach((button) => button.addEventListener("click", () => saveExceptionReview(button.dataset.saveException)));
+      if (!summary.pending.length) el("resultText").innerHTML = "<div class='message show success'>자동 매칭과 예외 거래 검토가 모두 완료되었습니다.</div>";
+    }
+    function saveExceptionReview(exceptionId) {
+      const item = latestExceptions.find((exception) => exception.id === exceptionId); const card = document.querySelector(`[data-exception-id="${exceptionId}"]`); if (!item || !card) return;
+      const status = card.querySelector('[data-role="status"]').value; const depositValue = card.querySelector('[data-role="deposit"]').value; const selectedDepositIndex = depositValue === "" ? null : Number(depositValue); const note = card.querySelector('[data-role="note"]').value.trim();
+      if (status === "manual_matched" && !Number.isInteger(selectedDepositIndex)) { showMessage("수동 매칭 완료로 저장하려면 연결할 입금 건을 선택해 주세요.","warning"); return; }
+      if (Number.isInteger(selectedDepositIndex) && isDepositTakenByOther(exceptionId,selectedDepositIndex)) { showMessage("이 입금 건은 다른 예외 거래에 이미 연결되어 있습니다.","warning"); return; }
+      item.status = status; item.selectedDepositIndex = selectedDepositIndex; item.note = note;
+      renderExceptionWorkspace(); renderResultTable(); showMessage("예외 거래 검토 결과를 현재 브라우저에 저장했습니다.","success");
+    }
+    function renderResultTable() {
+      const { pending } = updateExceptionSummary(); const text = el("resultText"); const table = el("tableContainer");
+      if (pending.length) {
+        text.innerHTML = "<div class='message show warning'>자동 매칭이 어려운 주문입니다. 부분·합산입금, 환불 예정, 수동 매칭 여부를 아래에서 검토해 주세요.</div>";
+        table.innerHTML = `<div class="table-wrap"><table><thead><tr><th>주문자명</th><th>주문금액</th><th>처리 상태</th><th>남은 차액</th><th>검토 사유</th></tr></thead><tbody>${pending.map((item) => `<tr><td>${escapeHTML(item.order.name || "(이름 열 없음)")}</td><td>${escapeHTML(formatWon(item.order.amount))}</td><td>${escapeHTML(statusLabel(item.status))}</td><td>${escapeHTML(formatWon(Math.max(0,(item.order.amount || 0) - appliedAmount(item))))}</td><td>${escapeHTML(item.note || item.reason)}</td></tr>`).join("")}</tbody></table></div>`;
+      } else { text.innerHTML = "<div class='message show success'>자동 매칭과 예외 거래 검토가 모두 완료되었습니다.</div>"; table.innerHTML = ""; }
+    }
+    function renderResult(result, deposits) {
+      latestAutoMatched = result.matched; latestDeposits = deposits; latestExceptions = result.missing.map((item, index) => ({ id:`exception-${item.order.index}-${index}`, ...item, status:item.detectedStatus || "unpaid", selectedDepositIndex:null, note:"" }));
+      renderExceptionWorkspace(); renderResultTable();
       el("results").classList.add("show"); el("results").scrollIntoView({behavior:"smooth",block:"start"});
     }
     async function runReconciliation() {
       if (betaRuns >= FREE_RECONCILIATION_LIMIT) { openPaywall("free_limit"); return; }
       hideMessage(); hideMapping(); el("results").classList.remove("show");
       if (typeof XLSX === "undefined") { showMessage("엑셀 처리 도구를 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.","error"); return; }
-      const usingSample = el("useSample").checked; const orderFile = el("orderFile").files[0]; const depositFile = el("depositFile").files[0];
-      if (!usingSample && (!orderFile || !depositFile)) { showMessage("주문서와 입금 내역 파일을 모두 업로드하거나, 샘플 테스트를 선택해 주세요.","warning"); return; }
+      const usingSample = el("useSample").checked; const isPasteMode = inputMode === "paste"; const orderFile = el("orderFile").files[0]; const depositFile = el("depositFile").files[0];
+      if (!usingSample && isPasteMode && (!el("orderPaste").value.trim() || !el("depositPaste").value.trim())) { showMessage("주문서 표와 입금 내역 표를 모두 붙여넣어 주세요.","warning"); return; }
+      if (!usingSample && !isPasteMode && (!orderFile || !depositFile)) { showMessage("주문서와 입금 내역 파일을 모두 업로드하거나, 표 복사·붙여넣기 또는 샘플 테스트를 선택해 주세요.","warning"); return; }
       const button = el("runButton"); button.disabled = true; button.textContent = "데이터 분석 중…";
       try {
-        const orderRows = usingSample ? SAMPLE.order : await readExcel(orderFile); const depositRows = usingSample ? SAMPLE.deposit : await readExcel(depositFile);
+        const orderRows = usingSample ? SAMPLE.order : isPasteMode ? parsePastedTable(el("orderPaste").value,"주문서") : await readExcel(orderFile); const depositRows = usingSample ? SAMPLE.deposit : isPasteMode ? parsePastedTable(el("depositPaste").value,"입금 내역") : await readExcel(depositFile);
         if (!orderRows.length || !depositRows.length) throw new Error("두 엑셀 파일 모두 첫 번째 시트에 데이터가 있어야 합니다.");
         const orderMapping = detectMapping(orderRows,"order"); const depositMapping = detectMapping(depositRows,"deposit"); validateMapping(orderMapping,"주문서"); validateMapping(depositMapping,"입금 내역"); displayMapping(orderMapping,depositMapping);
-        const orderRecords = buildRecords(orderRows,orderMapping,"order");
-        const depositRecords = buildRecords(depositRows,depositMapping,"deposit");
+        const orderRecords = buildRecords(orderRows,orderMapping,"order"); const depositRecords = buildRecords(depositRows,depositMapping,"deposit"); latestOrders = orderRecords;
         const result = matchDeposits(orderRecords,depositRecords,el("matchingMode").value);
-        betaRuns += 1; localStorage.setItem("sellerSettlementBetaRuns",String(betaRuns)); renderBetaRuns(); updateReport(orderRecords,result); recordAnalytics(orderRecords,result); showMessage("정산이 완료되었습니다. 자동 인식한 열과 매칭 결과를 확인해 주세요.","success"); renderResult(result);
+        betaRuns += 1; localStorage.setItem("sellerSettlementBetaRuns",String(betaRuns)); renderBetaRuns(); updateReport(orderRecords,result); recordAnalytics(orderRecords,result); showMessage("정산이 완료되었습니다. 자동 매칭과 예외 거래 후보를 확인해 주세요.","success"); renderResult(result,depositRecords);
       } catch (error) { showMessage(error?.message || "엑셀 처리 중 오류가 발생했습니다.","error"); }
       finally { button.disabled = false; button.textContent = "정산 및 누락자 확인하기"; }
     }
-    function downloadMissing() { const rows = latestMissing.length ? latestMissing : [{"안내":"확인 필요한 항목이 없습니다."}]; const sheet = XLSX.utils.json_to_sheet(rows); const book = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(book,sheet,"확인필요목록"); XLSX.writeFile(book,"정산확인필요_결과.xlsx"); }
+    function downloadMissing() { const rows = latestMissing.length ? latestMissing : [{"안내":"확인 필요한 항목이 없습니다."}]; const sheet = XLSX.utils.json_to_sheet(rows); const book = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(book,sheet,"예외거래검토"); XLSX.writeFile(book,"정산_예외거래_검토결과.xlsx"); }
     let reviewRating = 0;
     function setReviewRating(rating) { reviewRating = rating; document.querySelectorAll(".review-star").forEach((star) => { const active = Number(star.dataset.rating) <= rating; star.setAttribute("aria-pressed", String(active)); }); el("reviewStatus").textContent = rating ? `${rating}점을 선택했습니다.` : "별점을 선택해 주세요."; }
     function openReview() { const saved = (() => { try { return JSON.parse(localStorage.getItem(REVIEW_STORAGE_KEY) || "null"); } catch (_) { return null; } })(); reviewRating = 0; el("reviewComment").value = saved?.comment || ""; setReviewRating(saved?.rating || 0); el("reviewStatus").textContent = saved ? "이 브라우저에 남긴 리뷰를 수정할 수 있습니다." : "작성한 리뷰는 이 브라우저에만 저장됩니다."; el("reviewModal").hidden = false; setTimeout(() => el("reviewComment").focus(), 0); }
@@ -518,6 +663,10 @@
     function submitReview() { const comment = el("reviewComment").value.trim(); if (!reviewRating) { el("reviewStatus").textContent = "별점을 1점부터 5점까지 선택해 주세요."; return; } if (!comment) { el("reviewStatus").textContent = "서비스 개선에 도움이 되는 한줄평을 남겨 주세요."; el("reviewComment").focus(); return; } const review = { rating:reviewRating, comment, updatedAt:Date.now() }; localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(review)); el("reviewStatus").textContent = "리뷰를 남겼습니다. 소중한 의견 감사합니다."; setTimeout(closeReview, 900); }
     ["orderFile","depositFile"].forEach((id) => el(id).addEventListener("change",()=>{ const file=el(id).files[0]; el(id === "orderFile" ? "orderName":"depositName").textContent=file ? file.name:"파일을 선택하지 않았습니다."; }));
     el("useSample").addEventListener("change",()=>{ if (el("useSample").checked) showMessage("샘플은 주문번호·연락처 뒷자리·이름 매칭을 모두 확인할 수 있도록 구성했습니다.","info"); else hideMessage(); });
+    el("inputModeUpload").addEventListener("click", () => setInputMode("upload"));
+    el("inputModePaste").addEventListener("click", () => setInputMode("paste"));
+    el("orderPaste").addEventListener("input", () => updatePasteStatus("orderPaste","orderPasteStatus","주문서"));
+    el("depositPaste").addEventListener("input", () => updatePasteStatus("depositPaste","depositPasteStatus","입금 내역"));
     function switchTab(tabName) {
       document.querySelectorAll(".app-tab").forEach((tab) => { const active = tab.dataset.tab === tabName; tab.setAttribute("aria-selected", String(active)); });
       document.querySelectorAll(".tab-panel").forEach((panel) => { panel.hidden = panel.id !== `panel-${tabName}`; });
