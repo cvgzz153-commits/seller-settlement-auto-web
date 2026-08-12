@@ -7,10 +7,10 @@
   <meta name="theme-color" content="#3182F6" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="정산메이트" />
+  <meta name="apple-mobile-web-app-title" content="SELLERHELP" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="apple-touch-icon" href="/icons/settlemate-icon.svg" />
-  <title>셀러 정산 자동화 툴 · 무료 베타</title>
+  <title>SELLERHELP · 무료 베타</title>
   <script src="xlsx.full.min.js"></script>
   <style>
     :root { --blue:#1b64da; --blue-dark:#154ca0; --navy:#172f5e; --ink:#17181a; --muted:#68717d; --line:#e6e9ee; --bg:#f5f7fb; --ok:#087f5b; --warn:#8a5900; --danger:#cf3d0d; --violet:#6b43ce; }
@@ -82,8 +82,8 @@
     body { background:radial-gradient(900px 420px at 50% -180px,#dcebff 0%,rgba(238,246,255,.8) 35%,#f6f8fb 72%); color:var(--ink); font-family:Pretendard,"Pretendard Variable","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:-.018em; }
     main { width:min(100% - 32px,920px); padding:20px 0 76px; position:relative; }
     .topbar { height:52px; display:flex; align-items:center; justify-content:space-between; margin-bottom:30px; }
-    .brand { display:inline-flex; gap:9px; align-items:center; color:var(--ink); text-decoration:none; font-weight:800; font-size:1rem; letter-spacing:-.04em; }
-    .brand-mark { width:28px; height:28px; display:inline-grid; place-items:center; background:linear-gradient(145deg,#3d8cff,#1763dd); border-radius:9px; color:#fff; font-size:.87rem; font-weight:900; box-shadow:0 6px 12px rgba(49,130,246,.24); }
+    .brand { display:inline-flex; align-items:center; color:var(--ink); text-decoration:none; min-width:0; }
+    .brand-logo { display:block; width:auto; height:36px; max-width:220px; object-fit:contain; object-position:left center; }
     .topbar-note { color:#6b7684; font-size:.82rem; font-weight:700; background:rgba(255,255,255,.72); border:1px solid rgba(229,232,235,.9); padding:7px 10px; border-radius:999px; }
     .hero { max-width:650px; text-align:left; margin:0 auto 27px; padding:30px 12px 10px; }
     .beta-pill { background:#eaf3ff; color:#3182f6; padding:7px 10px; font-size:.78rem; font-weight:800; border-radius:8px; margin:0 0 16px; box-shadow:none; }
@@ -146,7 +146,7 @@
     .feedback-button:hover { background:#eaf3ff; color:#1766dc; }
     .guide { background:#f9fafb; border-radius:14px; padding:14px 16px; color:#6b7684; font-size:.8rem; margin:16px 0 0; }
     footer { color:#98a2ae; font-size:.76rem; margin-top:24px; }
-    @media (max-width:640px) { main { width:min(100% - 22px,920px); padding-top:12px; } .topbar { margin-bottom:12px; } .topbar-note { font-size:.72rem; } .hero { padding:22px 4px 8px; margin-bottom:20px; } h1 { font-size:2rem; } .feature-chips { padding:0 4px; margin-bottom:22px; } .card,.upload-card { border-radius:20px; padding:18px; } .upload-grid,.beta-stats,.control-grid,.metrics { grid-template-columns:1fr; } .upload-grid > div { padding:14px; } .file-box { min-height:116px; padding:16px; } .control-grid { align-items:stretch; } .sample-row { min-height:44px; } .primary { min-height:52px; } }
+    @media (max-width:640px) { main { width:min(100% - 22px,920px); padding-top:12px; } .topbar { margin-bottom:12px; } .brand-logo { height:31px; max-width:185px; } .topbar-note { font-size:.72rem; } .hero { padding:22px 4px 8px; margin-bottom:20px; } h1 { font-size:2rem; } .feature-chips { padding:0 4px; margin-bottom:22px; } .card,.upload-card { border-radius:20px; padding:18px; } .upload-grid,.beta-stats,.control-grid,.metrics { grid-template-columns:1fr; } .upload-grid > div { padding:14px; } .file-box { min-height:116px; padding:16px; } .control-grid { align-items:stretch; } .sample-row { min-height:44px; } .primary { min-height:52px; } }
   </style>
   <style>
     .app-tabs { display:flex; gap:6px; max-width:650px; margin:0 auto 22px; padding:5px; border:1px solid #e7ebf0; border-radius:14px; background:rgba(255,255,255,.78); box-shadow:0 5px 14px rgba(31,42,55,.04); }
@@ -222,7 +222,7 @@
 <body>
   <main>
     <div class="topbar" aria-label="서비스 정보">
-      <a class="brand" href="#top" aria-label="정산메이트 홈"><span class="brand-mark" aria-hidden="true">S</span><span>정산메이트</span></a>
+      <a class="brand" href="#top" aria-label="SELLERHELP 홈"><img class="brand-logo" src="/assets/sellerhelp-logo-d.png" alt="SELLERHELP · 스마트 셀러 정산 파트너" /></a>
       <div style="display:flex;align-items:center;gap:8px"><button id="installButton" class="install-button" type="button">앱으로 설치</button><span class="topbar-note">Free Beta</span></div>
     </div>
     <header class="hero" id="top">
