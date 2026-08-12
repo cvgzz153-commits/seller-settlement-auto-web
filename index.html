@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="주문서와 입금 내역 엑셀을 브라우저에서 직접 대조하는 정산 도구" />
+  <title>셀러 정산 자동화 툴</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    :root { --blue:#1b64da; --blue-dark:#154ca0; --ink:#17181a; --muted:#68717d; --line:#e6e9ee; --bg:#f5f7fb; --ok:#087f5b; --warn:#a16100; --danger:#d9480f; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif; }
+    main { width:min(840px, calc(100% - 32px)); margin:0 auto; padding:38px 0 64px; }
+    .hero { text-align:center; margin-bottom:24px; }
+    h1 { margin:0 0 10px; font-size:clamp(1.7rem, 5vw, 2.25rem); letter-spacing:-.055em; }
+    .hero p { color:var(--muted); margin:0; line-height:1.6; }
+    .notice { display:flex; gap:9px; align-items:flex-start; padding:14px 16px; border-radius:12px; background:#eaf1ff; color:#184a9c; margin:20px 0 14px; font-size:.92rem; line-height:1.5; }
+    .trial { font-weight:700; font-size:.95rem; margin:0 0 16px; }
+    .trial strong { color:var(--blue); }
+    .card { background:white; border:1px solid var(--line); border-radius:18px; box-shadow:0 8px 24px rgba(22, 37, 66, .055); padding:clamp(18px, 4vw, 30px); margin-top:16px; }
+    .upload-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    h2 { font-size:1.05rem; margin:0 0 12px; letter-spacing:-.025em; }
+    .file-box { display:block; cursor:pointer; border:1.5px dashed #b8c3d2; border-radius:12px; padding:24px 16px; text-align:center; color:var(--muted); transition:.15s; min-height:136px; }
+    .file-box:hover, .file-box:focus-within { border-color:var(--blue); background:#f7faff; color:var(--blue); }
+    .file-box input { display:none; }
+    .file-icon { font-size:24px; display:block; margin-bottom:8px; }
+    .file-name { display:block; overflow-wrap:anywhere; font-size:.88rem; margin-top:8px; color:#394454; }
+    hr { border:0; border-top:1px solid var(--line); margin:22px 0; }
+    .sample-row { display:flex; align-items:center; gap:10px; font-size:.95rem; cursor:pointer; }
+    .sample-row input { width:18px; height:18px; accent-color:var(--blue); }
+    button { font:inherit; cursor:pointer; border:0; border-radius:10px; font-weight:750; transition:.15s; }
+    .primary { width:100%; margin-top:16px; background:var(--blue); color:#fff; padding:15px 18px; box-shadow:0 5px 12px rgba(27,100,218,.22); }
+    .primary:hover { background:var(--blue-dark); transform:translateY(-1px); }
+    .primary:disabled { cursor:not-allowed; opacity:.6; transform:none; }
+    .message { display:none; margin-top:16px; padding:13px 15px; border-radius:10px; line-height:1.5; font-size:.94rem; }
+    .message.show { display:block; }
+    .message.info { background:#eaf1ff; color:#174a9d; }
+    .message.success { background:#e7f7ef; color:#087f5b; }
+    .message.warning { background:#fff7db; color:#8a5900; }
+    .message.error { background:#fff0eb; color:#b83f11; }
+    .results { display:none; }
+    .results.show { display:block; }
+    .metrics { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+    .metric { border:1px solid var(--line); border-radius:12px; padding:16px; }
+    .metric span { display:block; color:var(--muted); font-size:.86rem; margin-bottom:6px; }
+    .metric strong { font-size:1.55rem; letter-spacing:-.04em; }
+    .metric.danger strong { color:var(--danger); }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:10px; margin:14px 0; }
+    table { border-collapse:collapse; width:100%; min-width:340px; font-size:.93rem; }
+    th, td { padding:12px 14px; text-align:left; border-bottom:1px solid var(--line); }
+    th { background:#f8f9fb; color:#3b4350; font-weight:750; }
+    tbody tr:last-child td { border-bottom:0; }
+    .download { background:#172f5e; color:#fff; padding:12px 16px; width:100%; }
+    .download:hover { background:#102449; }
+    .guide { color:var(--muted); font-size:.86rem; line-height:1.6; margin:14px 0 0; }
+    footer { text-align:center; color:#88919e; font-size:.78rem; margin-top:22px; line-height:1.5; }
+    @media (max-width:600px) { main { width:min(100% - 24px, 840px); padding-top:26px; } .upload-grid, .metrics { grid-template-columns:1fr; } .file-box { min-height:112px; padding:18px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <h1>인스타 공구·마켓 정산 자동화</h1>
+      <p>주문서 엑셀과 입금 내역을 올리면, 누락된 입금자를 바로 찾아드립니다.</p>
+    </header>
+
+    <div class="notice" role="status"><span aria-hidden="true">🔒</span><span>파일은 서버로 전송하지 않습니다. 이 페이지가 열린 브라우저 안에서만 분석됩니다.</span></div>
+    <p class="trial">남은 무료 체험 횟수: <strong id="trialCount">3회</strong> / 3회</p>
+
+    <section class="card" aria-labelledby="uploadTitle">
+      <div class="upload-grid">
+        <div>
+          <h2 id="uploadTitle">📦 주문서 엑셀</h2>
+          <label class="file-box" for="orderFile">
+            <span class="file-icon" aria-hidden="true">↑</span>
+            <span>주문 내역 파일 업로드</span>
+            <small>XLSX 또는 XLS</small>
+            <span class="file-name" id="orderName">파일을 선택하지 않았습니다.</span>
+            <input id="orderFile" type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+          </label>
+        </div>
+        <div>
+          <h2>💰 입금 내역 엑셀</h2>
+          <label class="file-box" for="depositFile">
+            <span class="file-icon" aria-hidden="true">↑</span>
+            <span>은행 입금 내역 업로드</span>
+            <small>XLSX 또는 XLS</small>
+            <span class="file-name" id="depositName">파일을 선택하지 않았습니다.</span>
+            <input id="depositFile" type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+          </label>
+        </div>
+      </div>
+      <hr />
+      <label class="sample-row" for="useSample"><input id="useSample" type="checkbox" /> <span>엑셀 파일이 없으신가요? 샘플 데이터로 미리 테스트해보기</span></label>
+      <button class="primary" id="runButton" type="button">정산 및 누락자 확인하기</button>
+      <div id="message" class="message" role="alert"></div>
+    </section>
+
+    <section class="card results" id="results" aria-live="polite" aria-labelledby="reportTitle">
+      <h2 id="reportTitle">정산 결과 리포트</h2>
+      <div class="metrics">
+        <div class="metric"><span>정상 입금 완료</span><strong id="matchedCount">0명</strong></div>
+        <div class="metric danger"><span>입금 누락/불일치</span><strong id="missingCount">0명</strong></div>
+      </div>
+      <div id="resultText"></div>
+      <div id="tableContainer"></div>
+      <button id="downloadButton" class="download" type="button">누락자 명단 엑셀 다운로드</button>
+    </section>
+
+    <p class="guide">필수 열 이름: 주문서에는 <strong>주문자명, 결제금액</strong>, 입금 내역에는 <strong>입금자명, 입금금액</strong>이 있어야 합니다. 이름과 금액이 모두 일치할 때 정상 입금으로 처리합니다.</p>
+    <footer>브라우저 내 로컬 처리 방식의 정산 도구입니다. 실제 서비스 운영 시에는 주문번호 등 고유 식별자를 추가하는 것을 권장합니다.</footer>
+  </main>
+
+  <script>
+    const REQUIRED = { order: ["주문자명", "결제금액"], deposit: ["입금자명", "입금금액"] };
+    const SAMPLE = {
+      order: [{ "주문자명": "김철수", "결제금액": 35000 }, { "주문자명": "이영희", "결제금액": 52000 }, { "주문자명": "박민수", "결제금액": 15000 }, { "주문자명": "정지은", "결제금액": 48000 }],
+      deposit: [{ "입금자명": "김철수", "입금금액": 35000 }, { "입금자명": "이영희", "입금금액": 52000 }, { "입금자명": "정지은", "입금금액": 48000 }, { "입금자명": "홍길동", "입금금액": 20000 }]
+    };
+    const el = (id) => document.getElementById(id);
+    let latestMissing = [];
+    let trials = Number(sessionStorage.getItem("settlementTrials") ?? "3");
+
+    function renderTrials() { el("trialCount").textContent = `${Math.max(0, trials)}회`; }
+    function showMessage(text, kind = "info") { const box = el("message"); box.textContent = text; box.className = `message show ${kind}`; }
+    function hideMessage() { el("message").className = "message"; el("message").textContent = ""; }
+    function normalizeName(value) { return String(value ?? "").trim(); }
+    function normalizeAmount(value) {
+      if (typeof value === "number") return value;
+      const result = Number(String(value ?? "").replace(/[₩,\s]/g, ""));
+      return Number.isFinite(result) ? result : NaN;
+    }
+    function makeKey(name, amount) { return `${normalizeName(name)}\u0000${normalizeAmount(amount)}`; }
+    function validateColumns(rows, required, label) {
+      if (!rows.length) throw new Error(`${label} 파일에 데이터가 없습니다.`);
+      const headers = Object.keys(rows[0]);
+      const absent = required.filter((column) => !headers.includes(column));
+      if (absent.length) throw new Error(`${label} 파일에 필요한 열이 없습니다: ${absent.join(", ")}`);
+    }
+    async function readExcel(file) {
+      const buffer = await file.arrayBuffer();
+      const workbook = XLSX.read(buffer, { type: "array" });
+      if (!workbook.SheetNames.length) throw new Error("엑셀에 읽을 수 있는 시트가 없습니다.");
+      return XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { defval: "" });
+    }
+    function reconcile(orderRows, depositRows) {
+      validateColumns(orderRows, REQUIRED.order, "주문서");
+      validateColumns(depositRows, REQUIRED.deposit, "입금 내역");
+      const depositCounts = new Map();
+      depositRows.forEach((row) => {
+        const name = normalizeName(row["입금자명"]); const amount = normalizeAmount(row["입금금액"]);
+        if (name && Number.isFinite(amount)) { const key = makeKey(name, amount); depositCounts.set(key, (depositCounts.get(key) ?? 0) + 1); }
+      });
+      const missing = []; let matched = 0;
+      orderRows.forEach((row) => {
+        const name = normalizeName(row["주문자명"]); const amount = normalizeAmount(row["결제금액"]);
+        if (!name || !Number.isFinite(amount)) { missing.push({ "주문자명": name || "(이름 없음)", "결제금액": row["결제금액"], "사유": "주문서 이름 또는 금액 형식 확인 필요" }); return; }
+        const key = makeKey(name, amount); const count = depositCounts.get(key) ?? 0;
+        if (count > 0) { depositCounts.set(key, count - 1); matched += 1; }
+        else missing.push({ "주문자명": name, "결제금액": amount, "사유": "일치하는 입금 기록 없음" });
+      });
+      return { matched, missing };
+    }
+    function escapeHTML(value) { return String(value).replace(/[&<>'"]/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" }[c])); }
+    function renderResult(result) {
+      latestMissing = result.missing;
+      el("matchedCount").textContent = `${result.matched}명`;
+      el("missingCount").textContent = `${result.missing.length}명`;
+      const resultText = el("resultText"); const table = el("tableContainer");
+      if (result.missing.length) {
+        resultText.innerHTML = "<div class='message show warning'>아래 주문은 주문 정보와 일치하는 입금 기록을 찾지 못했습니다.</div>";
+        table.innerHTML = `<div class="table-wrap"><table><thead><tr><th>주문자명</th><th>결제금액</th><th>사유</th></tr></thead><tbody>${result.missing.map((row) => `<tr><td>${escapeHTML(row["주문자명"])}</td><td>${Number(row["결제금액"]).toLocaleString("ko-KR")}원</td><td>${escapeHTML(row["사유"])}</td></tr>`).join("")}</tbody></table></div>`;
+      } else { resultText.innerHTML = "<div class='message show success'>모든 주문자의 입금 내역이 일치합니다.</div>"; table.innerHTML = ""; }
+      el("results").classList.add("show");
+      el("results").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    async function runReconciliation() {
+      hideMessage(); el("results").classList.remove("show");
+      if (trials <= 0) { showMessage("무료 체험 횟수를 모두 사용했습니다. 새 브라우저 세션에서 다시 시작할 수 있습니다.", "warning"); return; }
+      const usingSample = el("useSample").checked;
+      const orderFile = el("orderFile").files[0]; const depositFile = el("depositFile").files[0];
+      if (!usingSample && (!orderFile || !depositFile)) { showMessage("주문서와 입금 내역 파일을 모두 업로드하거나, 샘플 데이터 테스트를 선택해 주세요.", "warning"); return; }
+      if (typeof XLSX === "undefined") { showMessage("엑셀 처리 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 새로고침해 주세요.", "error"); return; }
+      const button = el("runButton"); button.disabled = true; button.textContent = "데이터 분석 중…";
+      try {
+        const orderRows = usingSample ? SAMPLE.order : await readExcel(orderFile);
+        const depositRows = usingSample ? SAMPLE.deposit : await readExcel(depositFile);
+        const result = reconcile(orderRows, depositRows);
+        trials -= 1; sessionStorage.setItem("settlementTrials", String(trials)); renderTrials();
+        showMessage("정산이 성공적으로 완료되었습니다.", "success"); renderResult(result);
+      } catch (error) { showMessage(error?.message || "엑셀 처리 중 오류가 발생했습니다.", "error"); }
+      finally { button.disabled = false; button.textContent = "정산 및 누락자 확인하기"; }
+    }
+    function downloadMissing() {
+      const rows = latestMissing.length ? latestMissing : [{ "안내": "입금 누락 또는 불일치 항목이 없습니다." }];
+      const sheet = XLSX.utils.json_to_sheet(rows);
+      const book = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(book, sheet, "입금누락자목록");
+      XLSX.writeFile(book, "정산누락자_결과.xlsx");
+    }
+    ["orderFile", "depositFile"].forEach((id) => el(id).addEventListener("change", () => {
+      const file = el(id).files[0]; el(id === "orderFile" ? "orderName" : "depositName").textContent = file ? file.name : "파일을 선택하지 않았습니다.";
+    }));
+    el("useSample").addEventListener("change", () => { if (el("useSample").checked) showMessage("샘플 데이터가 적용되었습니다. 정산 실행 버튼을 눌러 결과를 확인하세요.", "info"); else hideMessage(); });
+    el("runButton").addEventListener("click", runReconciliation);
+    el("downloadButton").addEventListener("click", downloadMissing);
+    renderTrials();
+  </script>
+</body>
+</html>
