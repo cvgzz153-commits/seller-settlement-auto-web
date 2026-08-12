@@ -184,7 +184,9 @@
     .chart-placeholder { margin-top:14px; min-height:132px; padding:18px; display:flex; align-items:flex-end; gap:10px; border-radius:15px; background:linear-gradient(180deg,#fafcff 0%,#f4f8fd 100%); border:1px solid #edf1f5; }
     .chart-bar { flex:1; border-radius:7px 7px 3px 3px; background:linear-gradient(180deg,#8bc0ff,#3182f6); opacity:.85; }
     .chart-bar:nth-child(1){height:30%;}.chart-bar:nth-child(2){height:54%;}.chart-bar:nth-child(3){height:43%;}.chart-bar:nth-child(4){height:72%;}.chart-bar:nth-child(5){height:58%;}.chart-bar:nth-child(6){height:88%;}
-    @media (max-width:640px) { .app-tabs { margin:0 0 17px; border-radius:13px; } .app-tab { padding:0 6px; min-height:42px; font-size:.75rem; } .panel-intro { padding:0 4px; } .template-grid,.template-form,.report-kpis { grid-template-columns:1fr; } .phase-badge { margin-left:0; } .service-card-title { flex-wrap:wrap; } }
+    .help-fab { position:fixed; right:24px; bottom:24px; z-index:30; min-height:48px; padding:0 16px; display:inline-flex; align-items:center; gap:8px; border-radius:999px; background:#191f28; color:#fff; text-decoration:none; font-size:.86rem; font-weight:800; box-shadow:0 10px 22px rgba(25,31,40,.24); transition:transform .18s,box-shadow .18s; }
+    .help-fab:hover { transform:translateY(-2px); box-shadow:0 14px 28px rgba(25,31,40,.28); }
+    @media (max-width:640px) { .app-tabs { margin:0 0 17px; border-radius:13px; } .app-tab { padding:0 6px; min-height:42px; font-size:.75rem; } .panel-intro { padding:0 4px; } .template-grid,.template-form,.report-kpis { grid-template-columns:1fr; } .phase-badge { margin-left:0; } .service-card-title { flex-wrap:wrap; } .help-fab { right:14px; bottom:14px; min-height:45px; padding:0 14px; } }
   </style>
 </head>
 <body>
@@ -298,6 +300,7 @@
     </section>
     <footer>무료 베타 버전입니다. 실제 서비스 운영 시에는 주문번호 같은 고유 식별자와 별도의 개인정보 처리 정책을 갖추는 것을 권장합니다.</footer>
   </main>
+  <a id="contactFab" class="help-fab" target="_blank" rel="noopener noreferrer" aria-label="문의 및 피드백 남기기"><span aria-hidden="true">?</span> 문의하기</a>
 
   <script>
     const REPO = "https://github.com/cvgzz153-commits/seller-settlement-auto-web";
@@ -434,7 +437,7 @@
       const preview = el("templatePreview"); preview.textContent = text; preview.classList.add("show");
     }
     el("templateButton").addEventListener("click",generateTemplate);
-    el("runButton").addEventListener("click",runReconciliation); el("downloadButton").addEventListener("click",downloadMissing); el("feedbackLink").href=buildFeedbackLink(); renderBetaRuns();
+    el("runButton").addEventListener("click",runReconciliation); el("downloadButton").addEventListener("click",downloadMissing); el("feedbackLink").href=buildFeedbackLink(); el("contactFab").href=buildFeedbackLink(); renderBetaRuns();
   </script>
 </body>
 </html>

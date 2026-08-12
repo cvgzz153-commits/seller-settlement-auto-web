@@ -1,0 +1,12 @@
+{
+  "name": "settlemate-commercial-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "정산메이트 정적 웹 앱 및 토스페이먼츠 서버리스 결제 기반",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node --check api/lib/http.js && node --check api/lib/plans.js && node --check api/lib/toss.js && node --check api/payments/create-order.js && node --check api/payments/confirm.js && node --check api/webhooks/toss.js"
+  }
+}
