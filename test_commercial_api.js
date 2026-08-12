@@ -16,12 +16,20 @@ async function run() {
   const confirm = require("./api/payments/confirm");
   const webhook = require("./api/webhooks/toss");
 
-  const orderRes = createResponse();
-  createOrder({ method: "POST", headers: { host: "localhost:3000" }, body: { planId: "monthly" } }, orderRes);
-  assert.equal(orderRes.statusCode, 200);
-  assert.equal(orderRes.body.amount, 4900);
-  assert.equal(orderRes.body.planId, "monthly");
-  assert.match(orderRes.body.orderId, /^settle_[A-Za-z0-9]+$/);
+  const monthlyAutoRes = createResponse();
+  createOrder({ method: "POST", headers: { host: "localhost:3000" }, body: { planId: "monthly_auto" } }, monthlyAutoRes);
+  assert.equal(monthlyAutoRes.statusCode, 200);
+  assert.equal(monthlyAutoRes.body.amount, 9900);
+  assert.equal(monthlyAutoRes.body.planId, "monthly_auto");
+  assert.equal(monthlyAutoRes.body.orderName, "SELLERHELP Pro 월 자동결제");
+  assert.match(monthlyAutoRes.body.orderId, /^settle_[A-Za-z0-9]+$/);
+
+  const oneTimeRes = createResponse();
+  createOrder({ method: "POST", headers: { host: "localhost:3000" }, body: { planId: "one_time" } }, oneTimeRes);
+  assert.equal(oneTimeRes.statusCode, 200);
+  assert.equal(oneTimeRes.body.amount, 990);
+  assert.equal(oneTimeRes.body.planId, "one_time");
+  assert.equal(oneTimeRes.body.orderName, "SELLERHELP 1회 정산권");
 
   const invalidPlanRes = createResponse();
   createOrder({ method: "POST", headers: { host: "localhost:3000" }, body: { planId: "unknown" } }, invalidPlanRes);

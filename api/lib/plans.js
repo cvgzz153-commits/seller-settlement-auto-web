@@ -1,17 +1,21 @@
 const PLANS = {
-  season_pass: {
-    id: "season_pass",
+  monthly_auto: {
+    id: "monthly_auto",
+    amount: 9900,
+    currency: "KRW",
+    orderName: "SELLERHELP Pro 월 자동결제",
+    description: "월 자동결제 Pro 구독 (빌링키 연동 후 자동 청구, 언제든 해지 가능)",
+    billingCycle: "monthly",
+    requiresBillingKey: true,
+  },
+  one_time: {
+    id: "one_time",
     amount: 990,
     currency: "KRW",
-    orderName: "정산메이트 공구 시즌 이용권",
-    description: "공구 오픈 시즌 1회 이용권",
-  },
-  monthly: {
-    id: "monthly",
-    amount: 4900,
-    currency: "KRW",
-    orderName: "정산메이트 월간 이용권",
-    description: "월간 이용권 (반복 결제 기능은 별도 빌링키 흐름 연결 필요)",
+    orderName: "SELLERHELP 1회 정산권",
+    description: "비정기 정산 작업을 위한 1회 정산권",
+    billingCycle: "one_time",
+    requiresBillingKey: false,
   },
 };
 
