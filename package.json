@@ -7,6 +7,6 @@
     "node": ">=20"
   },
   "scripts": {
-    "check": "node --check api/lib/http.js && node --check api/lib/plans.js && node --check api/lib/toss.js && node --check api/payments/create-order.js && node --check api/payments/confirm.js && node --check api/webhooks/toss.js"
+    "check": "node --check api/lib/http.js && node --check api/lib/plans.js && node --check api/lib/toss.js && node --check api/lib/entitlements.js && node --check api/lib/notifications.js && node --check api/payments/create-order.js && node --check api/payments/confirm.js && node --check api/webhooks/toss.js && node --check api/notifications/create-job.js"
   }
 }

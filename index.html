@@ -2,8 +2,14 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="주문서와 입금 내역 엑셀을 브라우저에서 직접 대조하는 무료 베타 정산 도구" />
+  <meta name="theme-color" content="#3182F6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="정산메이트" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icons/settlemate-icon.svg" />
   <title>셀러 정산 자동화 툴 · 무료 베타</title>
   <script src="xlsx.full.min.js"></script>
   <style>
@@ -184,16 +190,40 @@
     .chart-placeholder { margin-top:14px; min-height:132px; padding:18px; display:flex; align-items:flex-end; gap:10px; border-radius:15px; background:linear-gradient(180deg,#fafcff 0%,#f4f8fd 100%); border:1px solid #edf1f5; }
     .chart-bar { flex:1; border-radius:7px 7px 3px 3px; background:linear-gradient(180deg,#8bc0ff,#3182f6); opacity:.85; }
     .chart-bar:nth-child(1){height:30%;}.chart-bar:nth-child(2){height:54%;}.chart-bar:nth-child(3){height:43%;}.chart-bar:nth-child(4){height:72%;}.chart-bar:nth-child(5){height:58%;}.chart-bar:nth-child(6){height:88%;}
+    .report-toolbar { display:flex; align-items:center; gap:10px; margin:0 0 14px; color:#6b7684; font-size:.8rem; font-weight:800; }
+    .report-toolbar select { width:auto; min-height:36px; padding:6px 28px 6px 10px; font-size:.8rem; border-radius:9px; }.report-toolbar input { width:52px; min-height:36px; padding:6px 8px; border:1px solid #dfe4ea; border-radius:9px; color:#333d4b; font:inherit; font-size:.8rem; }
+    .advanced-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .advanced-kpi { padding:15px; border:1px solid #e9edf1; border-radius:15px; background:#fbfcfd; }
+    .advanced-kpi span { display:block; color:#8b95a1; font-size:.73rem; font-weight:800; margin-bottom:7px; }
+    .advanced-kpi strong { display:block; color:#333d4b; font-size:1.05rem; letter-spacing:-.04em; white-space:nowrap; }
+    .advanced-kpi.accent { background:#f1f7ff; border-color:#dbe9ff; }.advanced-kpi.accent strong { color:#2676ee; }
+    .advanced-kpi.warning { background:#fffaf1; border-color:#ffedc8; }.advanced-kpi.warning strong { color:#a86400; }
+    .trend-card { margin-top:14px; padding:16px; border:1px solid #e9edf1; border-radius:16px; background:linear-gradient(180deg,#fcfdff 0%,#f7faff 100%); }
+    .trend-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }.trend-heading b { display:block; color:#333d4b; font-size:.88rem; }.trend-heading span { display:block; margin-top:4px; color:#8b95a1; font-size:.74rem; }
+    .trend-heading .trend-badge { margin:0; padding:5px 7px; border-radius:7px; background:#eff6ff; color:#2676ee; font-size:.69rem; font-weight:800; white-space:nowrap; }
+    .trend-bars { min-height:128px; display:flex; gap:9px; align-items:flex-end; padding-top:16px; }.trend-bar { flex:1; min-width:24px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px; }.trend-bar i { display:block; width:100%; max-width:34px; min-height:4px; border-radius:7px 7px 3px 3px; background:linear-gradient(180deg,#7bb7ff,#2676ee); }.trend-bar span { color:#8b95a1; font-size:.66rem; }.trend-empty { margin:4px 0 0; color:#8b95a1; font-size:.76rem; }.trend-empty.has-data { display:none; }
+    .automation-module { margin-top:16px; padding:20px; border:1px solid #dbe9ff; border-radius:18px; background:linear-gradient(135deg,#fbfdff 0%,#f3f8ff 100%); }
+    .automation-module h3 { margin:0 0 5px; font-size:1rem; color:#333d4b; }
+    .automation-module > p { margin:0; color:#6b7684; font-size:.84rem; line-height:1.55; }
+    .automation-grid { display:grid; grid-template-columns:1.35fr .65fr; gap:12px; margin-top:16px; }
+    .automation-note,.automation-status { border-radius:13px; padding:14px; background:#fff; border:1px solid #e7edf5; color:#6b7684; font-size:.81rem; line-height:1.6; }
+    .automation-note b,.automation-status b { color:#333d4b; }
+    .pro-action { width:100%; min-height:48px; margin-top:14px; border-radius:13px; background:#1f6fe5; color:#fff; font-size:.91rem; font-weight:800; box-shadow:0 7px 14px rgba(31,111,229,.18); }
+    .pro-action:hover { background:#1764d7; }
+    .pro-lock { display:inline-flex; align-items:center; gap:5px; min-height:24px; padding:0 8px; border-radius:999px; background:#edf5ff; color:#2676ee; font-size:.7rem; font-weight:850; }
+    .paywall-modal[hidden] { display:none; }.paywall-modal { position:fixed; inset:0; z-index:60; display:grid; place-items:center; padding:20px; background:rgba(25,31,40,.50); backdrop-filter:blur(5px); }.paywall-card { width:min(100%,460px); padding:26px; border-radius:23px; background:#fff; box-shadow:0 22px 62px rgba(15,23,42,.26); position:relative; }.paywall-close { position:absolute; top:12px; right:12px; width:34px; height:34px; border-radius:50%; color:#6b7684; background:#f2f4f6; font-size:1.15rem; }.paywall-kicker { display:inline-flex; padding:6px 9px; border-radius:999px; background:#edf5ff; color:#2676ee; font-size:.72rem; font-weight:850; }.paywall-card h2 { margin:13px 0 7px; color:#191f28; font-size:1.4rem; letter-spacing:-.05em; }.paywall-card p { margin:0; color:#6b7684; font-size:.88rem; line-height:1.6; }.paywall-list { display:grid; gap:9px; margin:18px 0; padding:0; list-style:none; }.paywall-list li { display:flex; gap:9px; align-items:flex-start; padding:10px 11px; border-radius:11px; background:#f8fafc; color:#4e5968; font-size:.82rem; }.paywall-list li b { color:#2676ee; }.paywall-price { display:flex; align-items:baseline; gap:5px; margin:4px 0 14px; }.paywall-price strong { color:#191f28; font-size:1.8rem; letter-spacing:-.06em; }.paywall-price span { color:#8b95a1; font-size:.8rem; }.paywall-status { min-height:18px; margin-top:11px; color:#8b95a1; font-size:.76rem; text-align:center; }
+    .install-button { display:none; min-height:34px; border-radius:999px; padding:0 10px; background:#3182f6; color:#fff; font-size:.74rem; font-weight:800; box-shadow:0 4px 10px rgba(49,130,246,.2); }
+    .install-button.show { display:inline-flex; align-items:center; }
     .help-fab { position:fixed; right:24px; bottom:24px; z-index:30; min-height:48px; padding:0 16px; display:inline-flex; align-items:center; gap:8px; border-radius:999px; background:#191f28; color:#fff; text-decoration:none; font-size:.86rem; font-weight:800; box-shadow:0 10px 22px rgba(25,31,40,.24); transition:transform .18s,box-shadow .18s; }
     .help-fab:hover { transform:translateY(-2px); box-shadow:0 14px 28px rgba(25,31,40,.28); }
-    @media (max-width:640px) { .app-tabs { margin:0 0 17px; border-radius:13px; } .app-tab { padding:0 6px; min-height:42px; font-size:.75rem; } .panel-intro { padding:0 4px; } .template-grid,.template-form,.report-kpis { grid-template-columns:1fr; } .phase-badge { margin-left:0; } .service-card-title { flex-wrap:wrap; } .help-fab { right:14px; bottom:14px; min-height:45px; padding:0 14px; } }
+    @media (max-width:640px) { .app-tabs { margin:0 0 17px; border-radius:13px; } .app-tab { padding:0 6px; min-height:42px; font-size:.75rem; } .panel-intro { padding:0 4px; } .template-grid,.template-form,.report-kpis,.automation-grid,.advanced-kpis { grid-template-columns:1fr; } .phase-badge { margin-left:0; } .service-card-title { flex-wrap:wrap; } .help-fab { right:14px; bottom:14px; min-height:45px; padding:0 14px; } }
   </style>
 </head>
 <body>
   <main>
     <div class="topbar" aria-label="서비스 정보">
       <a class="brand" href="#top" aria-label="정산메이트 홈"><span class="brand-mark" aria-hidden="true">S</span><span>정산메이트</span></a>
-      <span class="topbar-note">Free Beta</span>
+      <div style="display:flex;align-items:center;gap:8px"><button id="installButton" class="install-button" type="button">앱으로 설치</button><span class="topbar-note">Free Beta</span></div>
     </div>
     <header class="hero" id="top">
       <div class="beta-pill">무료 베타 · 셀러 피드백 반영 중</div>
@@ -286,6 +316,12 @@
         </div>
         <button id="templateButton" class="secondary-button" type="button">안내 문구 생성하기</button>
         <div id="templatePreview" class="template-preview" aria-live="polite"></div>
+
+        <section class="automation-module" aria-labelledby="automationTitle">
+          <div class="service-card-title"><span class="service-icon" aria-hidden="true">↗</span><div><h3 id="automationTitle">정상 매칭 고객 자동 알림</h3><p>정산이 완료된 고객만 선택해 알림톡·SMS 공급자로 안전하게 전달하는 Pro 모듈입니다.</p></div><span class="pro-lock">🔒 Pro</span></div>
+          <div class="automation-grid"><div class="automation-note"><b>발송 흐름</b><br>서버에서 구독 상태와 수신 동의를 확인한 뒤, 입금 확인 또는 배송 시작 템플릿을 선택해 발송 작업을 생성합니다.</div><div class="automation-status"><b>공급자 설정</b><br><span id="notificationProviderStatus">연동 대기</span></div></div>
+          <button id="queueNotificationButton" class="pro-action" type="button">자동 알림 발송 설정하기</button>
+        </section>
       </section>
     </section>
 
@@ -294,13 +330,23 @@
       <section class="card">
         <div class="service-card-title"><span class="service-icon green" aria-hidden="true">₩</span><div><h2>공구 마켓 매출 및 정산 대시보드</h2><p>현재 브라우저에서 실행한 정산 결과만 요약합니다.</p></div><span class="phase-badge">로컬 집계</span></div>
         <div class="report-kpis"><div class="report-kpi accent"><span>주문 합계</span><strong id="reportOrderTotal">0원</strong></div><div class="report-kpi"><span>정상 매칭</span><strong id="reportMatched">0건</strong></div><div class="report-kpi"><span>확인 필요</span><strong id="reportMissing">0건</strong></div></div>
-        <div class="chart-placeholder" aria-label="샘플 매출 추이"><span class="chart-bar"></span><span class="chart-bar"></span><span class="chart-bar"></span><span class="chart-bar"></span><span class="chart-bar"></span><span class="chart-bar"></span></div>
         <div class="report-message"><span aria-hidden="true">i</span><span><b id="reportStatus">아직 정산 결과가 없습니다.</b><br>입금 정산 탭에서 파일을 분석하면 이번 작업의 요약이 여기에 표시됩니다.</span></div>
+      </section>
+
+      <section class="card pro-report-card" aria-labelledby="advancedReportTitle">
+        <div class="service-card-title"><span class="service-icon green" aria-hidden="true">↗</span><div><h2 id="advancedReportTitle">기간별 수익·정산 분석</h2><p>이 브라우저에서 실행한 실제 정산 기록만 쌓아 추세와 미수금을 보여줍니다.</p></div><span class="pro-lock">🔒 Pro</span></div>
+        <div class="report-toolbar"><label for="reportRange">집계 기간</label><select id="reportRange"><option value="7">최근 7일</option><option value="30">최근 30일</option><option value="90">최근 90일</option></select><label for="costRate">원가율</label><input id="costRate" type="number" min="0" max="100" step="1" value="30" aria-label="원가율 퍼센트" /><span>%</span></div>
+        <div class="advanced-kpis"><div class="advanced-kpi"><span>기간 매출</span><strong id="advancedRevenue">정산 대기</strong></div><div class="advanced-kpi accent"><span>추정 순수익</span><strong id="advancedNetProfit">원가 설정 필요</strong></div><div class="advanced-kpi warning"><span>미수금</span><strong id="advancedOutstanding">0원</strong></div><div class="advanced-kpi"><span>정산 완료율</span><strong id="advancedCompletionRate">0%</strong></div></div>
+        <div class="trend-card"><div class="trend-heading"><div><b>정산 매출 추이</b><span id="advancedPeriodLabel">최근 정산 실행 기록</span></div><span class="trend-badge">로컬 데이터</span></div><div id="trendBars" class="trend-bars" aria-label="기간별 정산 매출 차트"></div><p id="trendEmpty" class="trend-empty">입금 정산을 실행하면 실제 결과가 이 브라우저에 기록됩니다.</p></div>
+        <button id="advancedReportButton" class="pro-action" type="button">Pro 수익 리포트 열기</button>
       </section>
     </section>
     <footer>무료 베타 버전입니다. 실제 서비스 운영 시에는 주문번호 같은 고유 식별자와 별도의 개인정보 처리 정책을 갖추는 것을 권장합니다.</footer>
   </main>
   <a id="contactFab" class="help-fab" target="_blank" rel="noopener noreferrer" aria-label="문의 및 피드백 남기기"><span aria-hidden="true">?</span> 문의하기</a>
+  <section id="paywallModal" class="paywall-modal" role="dialog" aria-modal="true" aria-labelledby="paywallTitle" hidden>
+    <div class="paywall-card"><button id="paywallClose" class="paywall-close" type="button" aria-label="구독 안내 닫기">×</button><span class="paywall-kicker">정산메이트 Pro</span><h2 id="paywallTitle">Pro 구독이 필요합니다</h2><p id="paywallDescription">업무 자동화와 고급 분석을 시작하려면 Pro를 이용해 보세요.</p><ul class="paywall-list"><li><b>✓</b><span>정상 매칭 고객 대상 <strong>자동 알림 발송</strong></span></li><li><b>✓</b><span>기간별 매출·순수익·미수금 <strong>고급 리포트</strong></span></li><li><b>✓</b><span>무료 베타 횟수 제한 없이 <strong>정산 작업</strong></span></li></ul><div class="paywall-price"><strong>월 4,900원</strong><span>부가세 및 결제 정책은 출시 전 확정</span></div><button id="paywallCheckout" class="pro-action" type="button">Pro 구독 설정 시작하기</button><p id="paywallStatus" class="paywall-status">결제 공급자 연결 전에는 실제 청구가 발생하지 않습니다.</p></div>
+  </section>
 
   <script>
     const REPO = "https://github.com/cvgzz153-commits/seller-settlement-auto-web";
@@ -335,6 +381,7 @@
     const el = (id) => document.getElementById(id);
     let latestMissing = [];
     let betaRuns = Number(localStorage.getItem("sellerSettlementBetaRuns") || "0");
+    const FREE_RECONCILIATION_LIMIT = 3;
 
     function normalizeHeader(value) { return String(value || "").trim().toLowerCase().replace(/[\s_\-()[\]{}]/g, ""); }
     function normalizeName(value) { return String(value || "").trim().replace(/\s+/g, " "); }
@@ -348,6 +395,33 @@
       el("reportMatched").textContent = `${result.matched}건`;
       el("reportMissing").textContent = `${result.missing.length}건`;
       el("reportStatus").textContent = result.missing.length ? `이번 정산에서 ${result.missing.length}건의 확인 필요 항목을 찾았습니다.` : "이번 정산의 모든 주문이 정상 매칭되었습니다.";
+    }
+    const ANALYTICS_STORAGE_KEY = "sellerSettlementAnalyticsHistory";
+    function loadAnalyticsHistory() { try { const raw = JSON.parse(localStorage.getItem(ANALYTICS_STORAGE_KEY) || "[]"); return Array.isArray(raw) ? raw.filter((item) => Number.isFinite(item?.at) && Number.isFinite(item?.revenue) && Number.isFinite(item?.outstanding) && Number.isFinite(item?.matched) && Number.isFinite(item?.total)) : []; } catch (_) { return []; } }
+    let analyticsHistory = loadAnalyticsHistory();
+    function recordAnalytics(orderRecords, result) {
+      const revenue = orderRecords.reduce((sum, order) => sum + (Number.isFinite(order.amount) ? order.amount : 0), 0);
+      const outstanding = result.missing.reduce((sum, item) => sum + (Number.isFinite(item.order.amount) ? item.order.amount : 0), 0);
+      analyticsHistory.push({ at:Date.now(), revenue, outstanding, matched:result.matched, total:orderRecords.length });
+      analyticsHistory = analyticsHistory.slice(-120);
+      localStorage.setItem(ANALYTICS_STORAGE_KEY, JSON.stringify(analyticsHistory));
+      updateAdvancedReport();
+    }
+    function formatWonNumber(value) { return `${Math.round(value || 0).toLocaleString("ko-KR")}원`; }
+    function updateAdvancedReport() {
+      const days = Number(el("reportRange")?.value || 7); const cutoff = Date.now() - days * 86400000;
+      const records = analyticsHistory.filter((item) => item.at >= cutoff);
+      const totals = records.reduce((acc, item) => ({ revenue:acc.revenue + item.revenue, outstanding:acc.outstanding + item.outstanding, matched:acc.matched + item.matched, total:acc.total + item.total }), { revenue:0, outstanding:0, matched:0, total:0 });
+      const costRate = Math.max(0, Math.min(100, Number(el("costRate")?.value || 0))) / 100;
+      const netProfit = totals.revenue * (1 - costRate); const completionRate = totals.total ? (totals.matched / totals.total) * 100 : 0;
+      el("advancedRevenue").textContent = records.length ? formatWonNumber(totals.revenue) : "정산 대기";
+      el("advancedNetProfit").textContent = records.length ? formatWonNumber(netProfit) : "원가 설정 필요";
+      el("advancedOutstanding").textContent = formatWonNumber(totals.outstanding);
+      el("advancedCompletionRate").textContent = `${completionRate.toFixed(1)}%`;
+      el("advancedPeriodLabel").textContent = records.length ? `최근 ${days}일 · ${records.length}회 정산 실행` : `최근 ${days}일 · 기록 없음`;
+      const bars = el("trendBars"); const max = Math.max(...records.map((item) => item.revenue), 1);
+      bars.innerHTML = records.slice(-12).map((item) => { const height = Math.max(8, Math.round((item.revenue / max) * 100)); const label = new Date(item.at).toLocaleDateString("ko-KR", { month:"numeric", day:"numeric" }); return `<span class="trend-bar"><i style="height:${height}%" title="${formatWonNumber(item.revenue)}"></i><span>${label}</span></span>`; }).join("");
+      el("trendEmpty").classList.toggle("has-data", records.length > 0);
     }
     function showMessage(text, kind = "info") { const box = el("message"); box.textContent = text; box.className = `message show ${kind}`; }
     function hideMessage() { el("message").className = "message"; el("message").textContent = ""; }
@@ -402,6 +476,7 @@
       el("results").classList.add("show"); el("results").scrollIntoView({behavior:"smooth",block:"start"});
     }
     async function runReconciliation() {
+      if (betaRuns >= FREE_RECONCILIATION_LIMIT) { openPaywall("free_limit"); return; }
       hideMessage(); hideMapping(); el("results").classList.remove("show");
       if (typeof XLSX === "undefined") { showMessage("엑셀 처리 도구를 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.","error"); return; }
       const usingSample = el("useSample").checked; const orderFile = el("orderFile").files[0]; const depositFile = el("depositFile").files[0];
@@ -414,7 +489,7 @@
         const orderRecords = buildRecords(orderRows,orderMapping,"order");
         const depositRecords = buildRecords(depositRows,depositMapping,"deposit");
         const result = matchDeposits(orderRecords,depositRecords,el("matchingMode").value);
-        betaRuns += 1; localStorage.setItem("sellerSettlementBetaRuns",String(betaRuns)); renderBetaRuns(); updateReport(orderRecords,result); showMessage("정산이 완료되었습니다. 자동 인식한 열과 매칭 결과를 확인해 주세요.","success"); renderResult(result);
+        betaRuns += 1; localStorage.setItem("sellerSettlementBetaRuns",String(betaRuns)); renderBetaRuns(); updateReport(orderRecords,result); recordAnalytics(orderRecords,result); showMessage("정산이 완료되었습니다. 자동 인식한 열과 매칭 결과를 확인해 주세요.","success"); renderResult(result);
       } catch (error) { showMessage(error?.message || "엑셀 처리 중 오류가 발생했습니다.","error"); }
       finally { button.disabled = false; button.textContent = "정산 및 누락자 확인하기"; }
     }
@@ -436,8 +511,23 @@
         : `${customer}님, 입금이 정상적으로 확인되었습니다.\n상품은 준비되는 대로 순차 출고해 드리겠습니다.\n감사합니다.`;
       const preview = el("templatePreview"); preview.textContent = text; preview.classList.add("show");
     }
+    function openPaywall(feature) { const titles = { notification:"자동 알림 발송은 Pro 구독 기능입니다", report:"고급 수익 리포트는 Pro 구독 기능입니다", free_limit:`무료 베타는 ${FREE_RECONCILIATION_LIMIT}회까지 사용할 수 있습니다` }; const descriptions = { notification:"알림톡·SMS 발송은 수신 동의 및 공급자 인증이 완료된 Pro 계정에서만 활성화됩니다.", report:"기간별 추이와 추정 순수익·미수금·완료율을 지속적으로 관리해 보세요.", free_limit:"더 많은 주문을 정산하고 자동화 기능을 사용하려면 Pro 구독을 설정해 주세요." }; el("paywallTitle").textContent = titles[feature] || "Pro 구독이 필요합니다"; el("paywallDescription").textContent = descriptions[feature] || "업무 자동화와 고급 분석을 시작하려면 Pro를 이용해 보세요."; el("paywallStatus").textContent = "결제 공급자 연결 전에는 실제 청구가 발생하지 않습니다."; el("paywallModal").hidden = false; }
+    function closePaywall() { el("paywallModal").hidden = true; }
+    async function startProCheckout() { const status = el("paywallStatus"); status.textContent = "구독 결제 설정을 확인하고 있습니다…"; try { const response = await fetch("/api/payments/create-order", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ planId:"monthly" }) }); if (!response.ok) throw new Error("결제 주문을 만들 수 없습니다."); const order = await response.json(); status.textContent = `주문 ${order.orderId.slice(0, 14)}…이 준비되었습니다. Vercel 환경 변수에 토스 키를 등록하면 결제창으로 자동 연결됩니다.`; } catch (_) { status.textContent = "Vercel 배포와 결제 키 설정이 완료되면 여기서 안전하게 결제창을 연결합니다."; } }
     el("templateButton").addEventListener("click",generateTemplate);
+    el("queueNotificationButton").addEventListener("click", () => openPaywall("notification")); el("advancedReportButton").addEventListener("click", () => openPaywall("report")); el("paywallClose").addEventListener("click", closePaywall); el("paywallModal").addEventListener("click", (event) => { if (event.target === el("paywallModal")) closePaywall(); }); el("paywallCheckout").addEventListener("click", startProCheckout); window.addEventListener("keydown", (event) => { if (event.key === "Escape") closePaywall(); });
+    el("reportRange").addEventListener("change", updateAdvancedReport); el("costRate").addEventListener("input", updateAdvancedReport); updateAdvancedReport();
     el("runButton").addEventListener("click",runReconciliation); el("downloadButton").addEventListener("click",downloadMissing); el("feedbackLink").href=buildFeedbackLink(); el("contactFab").href=buildFeedbackLink(); renderBetaRuns();
+
+    const initialTab = new URLSearchParams(location.search).get("tab");
+    if (["settlement", "shipping", "report"].includes(initialTab)) switchTab(initialTab);
+
+    if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js").catch(() => {}));
+    let deferredInstallPrompt = null;
+    const installButton = el("installButton");
+    window.addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); deferredInstallPrompt = event; installButton.classList.add("show"); });
+    installButton.addEventListener("click", async () => { if (!deferredInstallPrompt) return; deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; installButton.classList.remove("show"); });
+    window.addEventListener("appinstalled", () => installButton.classList.remove("show"));
   </script>
 </body>
 </html>

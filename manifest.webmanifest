@@ -1,0 +1,35 @@
+{
+  "id": "/",
+  "name": "정산메이트 · 셀러 정산 자동화",
+  "short_name": "정산메이트",
+  "description": "인스타 공구와 마켓 셀러를 위한 브라우저 내 정산 자동화 도구",
+  "lang": "ko-KR",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F6F8FB",
+  "theme_color": "#3182F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/settlemate-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "입금 정산",
+      "short_name": "입금 정산",
+      "url": "/?tab=settlement",
+      "icons": [{ "src": "/icons/settlemate-icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "매출 리포트",
+      "short_name": "리포트",
+      "url": "/?tab=report",
+      "icons": [{ "src": "/icons/settlemate-icon.svg", "sizes": "any" }]
+    }
+  ]
+}

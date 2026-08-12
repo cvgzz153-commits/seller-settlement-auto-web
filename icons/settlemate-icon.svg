@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">정산메이트 앱 아이콘</title>
+  <desc id="desc">파란색 배경 위에 흰색 정산 기호가 있는 아이콘</desc>
+  <defs>
+    <linearGradient id="bg" x1="70" y1="50" x2="450" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5DA7FF"/>
+      <stop offset="1" stop-color="#1763DD"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="122" fill="url(#bg)"/>
+  <path d="M161 142h190c18 0 33 15 33 33v162c0 18-15 33-33 33H227l-68 54v-249c0-18 15-33 33-33Z" fill="#fff" fill-opacity=".98"/>
+  <path d="M219 219h106M219 268h75M219 317h48" stroke="#2676EE" stroke-width="25" stroke-linecap="round"/>
+  <circle cx="334" cy="316" r="48" fill="#1B64DA"/>
+  <path d="m315 316 14 14 26-31" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
