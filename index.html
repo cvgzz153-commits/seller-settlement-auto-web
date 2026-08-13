@@ -243,13 +243,19 @@
     .paste-guide { margin:0 0 14px; padding:12px; border-radius:12px; background:#fff; border:1px solid #e3edf9; color:#5f728b; font-size:.78rem; line-height:1.55; }.paste-guide b { color:#2676ee; }
     .paste-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }.paste-field { display:flex; flex-direction:column; gap:7px; color:#4e5968; font-size:.82rem; font-weight:850; }.paste-field textarea { width:100%; min-height:176px; resize:vertical; padding:12px; border:1px solid #cfd9e5; border-radius:12px; background:#fff; color:#333d4b; font:500 .78rem/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }.paste-field textarea:focus { outline:3px solid rgba(49,130,246,.14); border-color:#83b6ff; }.paste-field small { min-height:17px; color:#8b95a1; font-size:.73rem; font-weight:650; }.paste-field small.ready { color:#1672eb; }.paste-field small.error { color:#d44343; }.paste-input-notice { display:none; margin:13px 0 0; padding:11px 12px; border-radius:12px; background:#eaf5ff; color:#176fc8; font-size:.78rem; line-height:1.55; font-weight:800; }.paste-input-notice.show { display:block; }.paste-input-notice.warning { background:#fff7e8; color:#9a6200; }.paste-privacy { margin:14px 0 0; color:#6b7684; font-size:.76rem; line-height:1.55; }
     @media (max-width:640px) { .input-mode-switch { gap:6px; }.input-mode { min-height:44px; font-size:.78rem; }.input-mode-hint { margin:9px 2px 14px; }.paste-input-mode { padding:14px; border-radius:15px; }.paste-grid { grid-template-columns:1fr; }.paste-field textarea { min-height:145px; font-size:.76rem; }.paste-heading .service-icon { width:38px; height:38px; border-radius:12px; } }
+
+    /* Brand header: make the service name legible at first glance on phones. */
+    .topbar { height:auto; min-height:66px; margin-bottom:34px; gap:12px; }
+    .brand { min-height:58px; padding:8px 12px; border:1px solid #dce5f0; border-radius:16px; background:rgba(255,255,255,.82); box-shadow:0 5px 14px rgba(31,42,55,.06); }
+    .brand-logo { height:46px; max-width:250px; }
+    @media (max-width:640px) { .topbar { min-height:70px; margin-bottom:29px; gap:9px; }.brand { flex:1 1 auto; min-width:0; min-height:60px; padding:7px 10px; border-radius:15px; }.brand-logo { height:50px; max-width:230px; }.plan-trigger { flex:0 0 auto; min-height:43px; padding:0 12px; font-size:.76rem; white-space:nowrap; }.plan-trigger-free { display:none; } }
   </style>
 </head>
 <body>
   <main>
     <div class="topbar" aria-label="서비스 정보">
       <a class="brand" href="#top" aria-label="SELLERHELP 홈"><img class="brand-logo" src="/assets/sellerhelp-logo-d.png" alt="SELLERHELP · 스마트 셀러 정산 파트너" /></a>
-      <div style="display:flex;align-items:center;gap:8px"><button id="installButton" class="install-button" type="button">앱으로 설치</button><button id="pricingTopButton" class="plan-trigger" type="button" aria-label="요금제 보기">Free · 요금제</button></div>
+      <div style="display:flex;align-items:center;gap:8px"><button id="installButton" class="install-button" type="button">앱으로 설치</button><button id="pricingTopButton" class="plan-trigger" type="button" aria-label="요금제 보기"><span class="plan-trigger-free">Free · </span>요금제</button></div>
     </div>
     <header class="hero" id="top">
       <div class="beta-pill">무료 베타 · 셀러 피드백 반영 중</div>
